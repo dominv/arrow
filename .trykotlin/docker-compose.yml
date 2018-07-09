@@ -1,0 +1,19 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7.22
+    build: docker/db
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_HOST:   # override from env file to be empty
+    ports:
+      - 3306:3306
+  backend:
+    build: docker/backend
+  frontend:
+    build: docker/frontend
+    ports:
+        - 8080:8080
+    depends_on:
+        - db
+        - backend

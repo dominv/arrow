@@ -1,0 +1,12 @@
+{
+    "name": "Maze",
+    "files": [
+        {
+            "filename": "Maze.kt",
+            "modifiable": "true"
+        }
+    ],
+    "args": "",
+    "confType": "java",
+    "expectedOutputFile": "expected output.txt"
+}
