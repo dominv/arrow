@@ -1,0 +1,12 @@
+{
+    "name": "A multi-language Hello",
+    "files": [
+        {
+            "filename": "A multi-language Hello.kt",
+            "modifiable": "true"
+        }
+    ],
+    "args": "FR",
+    "confType": "java",
+    "expectedOutput": "Salut!</br>"
+}

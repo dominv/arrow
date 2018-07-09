@@ -1,0 +1,5 @@
+Custom delegate
+Lazy property
+Observable property
+NotNull property
+Properties in map

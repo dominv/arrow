@@ -1,0 +1,11 @@
+{
+    "name": "Traffic light",
+    "files": [
+        {
+            "modifiable": "true",
+            "filename": "Traffic light.kt"
+        }
+    ],
+    "args": "",
+    "confType": "canvas"
+}

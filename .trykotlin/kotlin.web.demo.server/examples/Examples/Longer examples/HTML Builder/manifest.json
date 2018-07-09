@@ -1,0 +1,12 @@
+{
+    "name": "HTML Builder",
+    "files": [
+        {
+            "filename": "HTML Builder.kt",
+            "modifiable": "true"
+        }
+    ],
+    "args": "",
+    "confType": "java",
+    "expectedOutputFile": "expected output.txt"
+}

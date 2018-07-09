@@ -1,0 +1,11 @@
+{
+    "name": "Fancy lines",
+    "files": [
+        {
+            "modifiable": "true",
+            "filename": "Fancy lines.kt"
+        }
+    ],
+    "args": "",
+    "confType": "canvas"
+}
