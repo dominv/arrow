@@ -6,6 +6,7 @@ git subtree add --prefix .trykotlin --message="Add trykotlin subtree" https://gi
 # Update arrow version
 echo $VERSION_NAME > .trykotlin/arrowktversion
 git add .trykotlin/arrowktversion
+git commit -m "Upgrading arrow version in trykolin"
 
 # Push built subtree to trykotlinwebdemo
 git subtree push --prefix .trykotlin https://github.com/dominv/kotlin-web-demo.git master
