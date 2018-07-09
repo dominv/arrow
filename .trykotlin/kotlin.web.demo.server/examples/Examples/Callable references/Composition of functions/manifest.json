@@ -1,0 +1,12 @@
+{
+    "name": "Composition of functions",
+    "files": [
+        {
+            "modifiable": "true",
+            "filename": "Composition of functions.kt"
+        }
+    ],
+    "args": "",
+    "confType": "java",
+    "expectedOutput": "[a, abc]</br>"
+}
