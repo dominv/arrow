@@ -1,0 +1,22 @@
+{
+  "name": "Sum",
+  "files": [
+    {
+      "filename": "Sum.kt",
+      "modifiable": "true",
+      "skipInTestVersion": true
+    },
+    {
+      "filename": "Tests.kt",
+      "modifiable": "false",
+      "type": "kotlin-test"
+    },
+    {
+      "filename": "Solution.kt",
+      "modifiable": "false",
+      "type": "solution"
+    }
+  ],
+  "args": "",
+  "confType": "junit"
+}

@@ -1,0 +1,12 @@
+{
+    "name": "NotNull property",
+    "files": [
+        {
+            "modifiable": "true",
+            "filename": "NotNull property.kt"
+        }
+    ],
+    "args": "",
+    "confType": "java",
+    "expectedOutput": "Carl</br>"
+}

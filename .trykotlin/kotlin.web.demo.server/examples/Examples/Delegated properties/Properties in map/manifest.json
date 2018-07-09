@@ -1,0 +1,12 @@
+{
+    "name": "Properties in map",
+    "files": [
+        {
+            "modifiable": "true",
+            "filename": "Properties in map.kt"
+        }
+    ],
+    "args": "",
+    "confType": "java",
+    "expectedOutput": "name = John Doe, age = 25</br>"
+}
