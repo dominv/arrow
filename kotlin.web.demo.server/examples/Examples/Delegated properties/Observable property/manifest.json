@@ -1,0 +1,12 @@
+{
+    "name": "Observable property",
+    "files": [
+        {
+            "modifiable": "true",
+            "filename": "Observable property.kt"
+        }
+    ],
+    "args": "",
+    "confType": "java",
+    "expectedOutput": "no name - Carl</br>"
+}
