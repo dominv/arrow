@@ -1,0 +1,12 @@
+{
+    "name": "Reading a name from the command line",
+    "files": [
+        {
+            "filename": "Reading a name from the command line.kt",
+            "modifiable": "true"
+        }
+    ],
+    "args": "guest",
+    "confType": "java",
+    "expectedOutput": "Hello, guest!</br>"
+}

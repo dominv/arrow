@@ -1,0 +1,16 @@
+{
+  "name" : "7.2",
+  "files" : [ {
+    "filename" : "1_EqualityOperators.kt",
+    "modifiable" : "true"
+  }, {
+    "filename" : "2_1_OrderingOperators.kt",
+    "modifiable" : "true"
+  }, {
+    "filename" : "2_2_OrderingOperators1.kt",
+    "modifiable" : "true"
+  } ],
+  "args" : "",
+  "searchForMain": false,
+  "confType" : "java"
+}
