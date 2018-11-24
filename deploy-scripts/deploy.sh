@@ -10,8 +10,8 @@ if [ "$TRAVIS_BRANCH" == "master" ]; then
     elif [[ "$VERSION_NAME" == *-SNAPSHOT ]]; then
         echo "Starting script for Snapshot Release $VERSION_NAME"
         . $(dirname $0)/deploy_snapshot.sh
-        echo "Starting script for TryArrow deployment with Snapshot Release $VERSION_NAME"
-        . $(dirname $0)/deploy_tryarrow.sh
+#        echo "Starting script for TryArrow deployment with Snapshot Release $VERSION_NAME"
+#        . $(dirname $0)/deploy_tryarrow.sh
     else
         echo "No deploy script matched version '$VERSION_NAME' on master"
     fi
