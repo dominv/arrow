@@ -50,6 +50,8 @@ The `ap` function transform the `Kleisli` into another `Kleisli` with a function
 
 ```kotlin:ank
 import arrow.data.fix
+import arrow.instances.option.applicative.*
+import arrow.instances.option.monad.*
 
 val intToDouble = {number:Int -> number.toDouble()}
 
@@ -106,10 +108,12 @@ or to replace the `Kleisli` result
 optionIntKleisli.andThen(Option.monad(), Some(0)).fix().run("1")
 ```
 
-## Available Instances
+### Supported type classes
 
-* [Applicative]({{ '/docs/typeclasses/applicative' | relative_url }})
-* [ApplicativeError]({{ '/docs/typeclasses/applicativeerror' | relative_url }})
-* [Functor]({{ '/docs/typeclasses/functor' | relative_url }})
-* [Monad]({{ '/docs/typeclasses/monad' | relative_url }})
-* [MonadError]({{ '/docs/typeclasses/monaderror' | relative_url }})
+```kotlin:ank:replace
+import arrow.reflect.*
+import arrow.data.*
+import arrow.core.*
+
+DataType(Kleisli::class).tcMarkdownList()
+```

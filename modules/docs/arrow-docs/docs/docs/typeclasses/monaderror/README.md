@@ -28,26 +28,32 @@ It lifts an exception into the computational context of a type constructor.
 import arrow.*
 import arrow.core.*
 import arrow.instances.*
+import arrow.instances.either.applicativeError.*
 
-ForEither<Throwable>() extensions { 
-  raiseError<Int>(RuntimeException("Paco"))
-}
+val eitherResult: Either<Throwable, Int> = 
+  RuntimeException("BOOM!").raiseError()
+
+eitherResult
 ```
 
 ```kotlin:ank
 import arrow.data.*
+import arrow.instances.`try`.applicativeError.*
 
-ForTry extensions { 
-  raiseError<Int>(RuntimeException("Paco"))
-}
+val tryResult: Try<Int> = 
+  RuntimeException("BOOM!").raiseError()
+
+tryResult
 ```
 
 ```kotlin:ank
 import arrow.effects.*
+import arrow.effects.instances.io.applicativeError.*
 
-ForIO extensions { 
-  raiseError<Int>(RuntimeException("Paco"))
-}
+val ioResult: IO<Int> = 
+  RuntimeException("BOOM!").raiseError()
+  
+ioResult.attempt().unsafeRunSync()
 ```
 
 #### Kind<F, A>.ensure
@@ -55,15 +61,13 @@ ForIO extensions {
 Tests a predicate against the object, and if it fails it executes a function to create an error.
 
 ```kotlin:ank
-ForEither<Throwable>() extensions {
-  Either.Right(1).ensure({ RuntimeException("Failed predicate") }, { it > 0 }) 
-}
+import arrow.instances.either.monadError.*
+
+Either.Right(1).ensure({ RuntimeException("Failed predicate") }, { it > 0 }) 
 ```
 
 ```kotlin:ank
-ForEither<Throwable>() extensions {
-  Either.Right(1).ensure({ RuntimeException("Failed predicate") }, { it < 0 }) 
-}
+Either.Right(1).ensure({ RuntimeException("Failed predicate") }, { it < 0 }) 
 ```
 
 ### Comprehensions
@@ -78,15 +82,11 @@ Arrow provides `MonadErrorLaws` in the form of test cases for internal verificat
 
 ### Data types
 
-The following datatypes in Arrow provide instances that adhere to the `MonadError` typeclass.
+```kotlin:ank:replace
+import arrow.reflect.*
+import arrow.typeclasses.MonadError
 
-- [Try]({{ '/docs/datatypes/try' | relative_url }})
-- [Either]({{ '/docs/datatypes/either' | relative_url }})
-- [Kleisli]({{ '/docs/datatypes/kleisli' | relative_url }})
-- [Option]({{ '/docs/datatypes/option' | relative_url }})
-- [EitherT]({{ '/docs/datatypes/eithert' | relative_url }})
-- [StateT]({{ '/docs/datatypes/statet' | relative_url }})
-- [IO]({{ '/docs/effects/io' | relative_url }})
-- [ObservableK]({{ '/docs/integrations/rx2' | relative_url }})
-- [FlowableK]({{ '/docs/integrations/rx2' | relative_url }})
-- [DeferredK]({{ '/docs/integrations/kotlinxcoroutines/' | relative_url }})
+TypeClass(MonadError::class).dtMarkdownList()
+```
+
+ank_macro_hierarchy(arrow.typeclasses.MonadError)

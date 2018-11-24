@@ -26,6 +26,7 @@ import arrow.*
 import arrow.core.*
 import arrow.mtl.typeclasses.*
 import arrow.mtl.instances.*
+import arrow.mtl.instances.option.monadFilter.*
 
 ForOption extensions { 
   bindingFilter {
@@ -40,6 +41,7 @@ ForOption extensions {
 
 ```kotlin:ank
 import arrow.data.*
+import arrow.mtl.instances.listk.monadFilter.*
 
 ForListK extensions { 
  bindingFilter {
@@ -95,7 +97,7 @@ ForOption extensions {
 ```
 
 ```kotlin:ank
-ListK.monadFilter().bindingFilter {
+bindingFilter {
  val a = listOf(1).k().bind()
  val b = listOf(1).k().bindWithFilter { it == a } //continues
  a + b
@@ -105,7 +107,9 @@ ListK.monadFilter().bindingFilter {
 When `bindWithFilter` returns `false` the computation short circuits yielding the monad's empty value
 
 ```kotlin:ank
-Option.monadFilter().bindingFilter {
+import arrow.mtl.instances.option.monadFilter.*
+
+bindingFilter {
  val a = Option(0).bind()
  val b = Option(1).bindWithFilter { it == a } //short circuits because a is 0
  a + b
@@ -113,15 +117,22 @@ Option.monadFilter().bindingFilter {
 ```   
 
 ```kotlin:ank
-ListK.monadFilter().bindingFilter {
+import arrow.mtl.instances.listk.monadFilter.*
+
+bindingFilter {
  val a = listOf(0).k().bind()
  val b = listOf(1).k().bindWithFilter { it == a } //short circuits because a is 0
  a + b
 }
 ```
 
-### Data Types
+### Data types
 
-The following data types in Arrow provide instances that adhere to the `MonadFilter` type class.
+```kotlin:ank:replace
+import arrow.reflect.*
+import arrow.mtl.typeclasses.MonadFilter
 
-- [Option]({{ '/docs/datatypes/option' | relative_url }})
+TypeClass(MonadFilter::class).dtMarkdownList()
+```
+
+ank_macro_hierarchy(arrow.mtl.typeclasses.MonadFilter)

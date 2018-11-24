@@ -35,6 +35,8 @@ This more or less illustrate the common use case of performing several independe
 The typeclass features several methods related to Applicative Builders that allow you to easily combine all the independent operations into one result.
 
 ```kotlin:ank
+import arrow.instances.option.applicative.*
+
 data class Profile(val name: String, val phone: Int, val address: List<String>)
 
 val r: Option<Tuple3<String, Int, List<String>>> = Option.applicative().tupled(profileService(), phoneService(), addressService()).fix()
@@ -104,30 +106,19 @@ Arrow already provides Applicative instances for most common datatypes both in A
 
 See [Deriving and creating custom typeclass]({{ '/docs/patterns/glossary' | relative_url }}) to provide your own Applicative instances for custom datatypes.
 
-### Data Types
+### Data types
 
-The following datatypes in Arrow provide instances that adhere to the `Applicative` typeclass.
+```kotlin:ank:replace
+import arrow.reflect.*
+import arrow.typeclasses.Applicative
 
-- [Either]({{ '/docs/datatypes/either' | relative_url }})
-- [EitherT]({{ '/docs/datatypes/eithert' | relative_url }})
-- [FreeApplicative]({{ '/docs/free/freeapplicative' | relative_url }})
-- [Function1]({{ '/docs/datatypes/function1' | relative_url }})
-- [Ior]({{ '/docs/datatypes/ior' | relative_url }})
-- [Kleisli]({{ '/docs/datatypes/kleisli' | relative_url }})
-- [OptionT]({{ '/docs/datatypes/optiont' | relative_url }})
-- [StateT]({{ '/docs/datatypes/statet' | relative_url }})
-- [Validated]({{ '/docs/datatypes/validated' | relative_url }})
-- [WriterT]({{ '/docs/datatypes/writert' | relative_url }})
-- [Const]({{ '/docs/datatypes/const' | relative_url }})
-- [Try]({{ '/docs/datatypes/try' | relative_url }})
-- [Eval]({{ '/docs/datatypes/eval' | relative_url }})
-- [IO]({{ '/docs/effects/io' | relative_url }})
-- [NonEmptyList]({{ '/docs/datatypes/nonemptylist' | relative_url }})
-- [Id]({{ '/docs/datatypes/id' | relative_url }})
-- [Function0]({{ '/docs/datatypes/function0' | relative_url }})
+TypeClass(Applicative::class).dtMarkdownList()
+```
 
 Additionally all instances of [`Monad`]({{ '/docs/typeclasses/monad' | relative_url }}) and their MTL variants implement the `Applicative` typeclass directly
 since they are all subtypes of `Applicative`.
 
-[applicative_source]: https://github.com/arrow-kt/arrow/blob/master/arrow-data/src/main/kotlin/arrow/typeclasses/Applicative.kt
-[applicative_law_source]: https://github.com/arrow-kt/arrow/blob/master/arrow-test/src/main/kotlin/arrow/laws/ApplicativeLaws.kt
+ank_macro_hierarchy(arrow.typeclasses.Applicative)
+
+[applicative_source]: https://github.com/arrow-kt/arrow/blob/master/modules/core/arrow-typeclasses/src/main/kotlin/arrow/typeclasses/Applicative.kt
+[applicative_law_source]: https://github.com/arrow-kt/arrow/blob/master/modules/core/arrow-test/src/main/kotlin/arrow/test/laws/ApplicativeLaws.kt

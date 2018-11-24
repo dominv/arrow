@@ -40,12 +40,14 @@ ForInt extensions { 1.combine(2) }
 
 ```kotlin:ank   
 import arrow.data.*
+import arrow.instances.listk.semigroup.*
 
 ListK.semigroup<Int>().run { listOf(1, 2, 3).k().combine(listOf(4, 5, 6).k()) }
 ```
 
 ```kotlin:ank
 import arrow.core.*
+import arrow.instances.option.monoid.*
 
 Option.monoid<Int>(Int.semigroup()).run { Option(1).combine(Option(2)) }
 ```
@@ -67,10 +69,13 @@ Option.monoid<Int>(Int.semigroup()).run {
 Contents partially adapted from [Scala Exercises Cat's Semigroup Tutorial](https://www.scala-exercises.org/cats/semigroup)
 
 
-### Data Types
+### Data types
 
-The following data types in Arrow provide instances that adhere to the `Semigroup` type class.
+```kotlin:ank:replace
+import arrow.reflect.*
+import arrow.typeclasses.Semigroup
 
-- [NonEmptyList]({{ '/docs/datatypes/nonemptylist' | relative_url }})
-- [SequenceK]({{ '/docs/datatypes/sequencek' | relative_url }})
-- [SetK]({{ '/docs/datatypes/setk' | relative_url }})
+TypeClass(Semigroup::class).dtMarkdownList()
+```
+
+ank_macro_hierarchy(arrow.typeclasses.Semigroup)

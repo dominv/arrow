@@ -68,16 +68,15 @@ that enables monad comprehensions for all datatypes for which a monad instance i
 ```kotlin:ank
 import arrow.typeclasses.*
 import arrow.instances.*
+import arrow.instances.either.monad.*
 
 fun getCountryCode(maybePerson : Either<BizError, Person>): Either<BizError, String> =
-  ForEither<BizError>() extensions { 
-   binding {
+  binding<BizError, String> { 
     val person = maybePerson.bind()
     val address = person.address.toEither({ AddressNotFound(person.id) }).bind()
     val country = address.country.toEither({ CountryNotFound(address.id)}).bind()
     country.code
-   }.fix()
- }
+  }.fix()
 ```
 
 Alright, a piece of cake right? That's because we were dealing with a simple type `Either`. But here's where things can get more complicated. Let's introduce another monad in the middle of the computation. For example what happens when we need to load a person by id, then their address and country to obtain the country code from a remote service?
@@ -162,25 +161,25 @@ We can't use flatMap in this case because the nested expression does not match t
 Let's look at how a similar implementation would look like using monad comprehensions without transformers:
 
 ```kotlin:ank
+import arrow.effects.observablek.monad.*
+
 fun getCountryCode(personId: Int): ObservableK<Either<BizError, String>> =
-      ForObservableK extensions {
-       binding {
-        val person = findPerson(personId).bind()
-        val address = person.fold (
-          { it.left() },
-          { it.address.toEither { AddressNotFound(personId) } }
-        )
-        val maybeCountry = address.fold(
-          { ObservableK.just(it.left()) },
-          { findCountry(it.id) }
-        ).bind()
-        val code = maybeCountry.fold(
-            { it.left() },
-            { it.code.right() }
-        )
-        code
-      }.fix()
-     }
+  binding {
+    val person = findPerson(personId).bind()
+    val address = person.fold (
+      { it.left() },
+      { it.address.toEither { AddressNotFound(personId) } }
+    )
+    val maybeCountry = address.fold(
+      { ObservableK.just(it.left()) },
+      { findCountry(it.id) }
+    ).bind()
+    val code = maybeCountry.fold(
+        { it.left() },
+        { it.code.right() }
+    )
+    code
+  }.fix()
 ```
 
 While we've got the logic working now, we're in a situation where we're forced to deal with the `Left cases`. We also have a ton of boilerplate type conversion with `fold`. The type conversion is necessary because in a monad comprehension you can only use a type of Monad. If we start with `ObservableK`, we have to stay in it’s monadic context by lifting anything we compute sequentially to a `ObservableK` whether or not it's async.
@@ -200,6 +199,8 @@ So our specialization `EitherT<ForObservableK, BizError, A>` is the EitherT tran
 We can now lift any value to a `EitherT<F, BizError, A>` which looks like this:
 
 ```kotlin:ank
+import arrow.effects.observablek.applicative.*
+
 val eitherTVal = EitherT.just<ForObservableK, BizError, Int>(ObservableK.applicative(), 1)
 eitherTVal
 ```
@@ -213,17 +214,17 @@ eitherTVal.fix().value
 So how would our function look if we implemented it with the EitherT monad transformer?
 
 ```kotlin
+import arrow.instances.eithert.monad.*
+
 fun getCountryCode(personId: Int): ObservableK<Either<BizError, String>> =
-  ForEitherT<ForObservableK, BizError>(ObservableK.monad()) extensions { 
-   binding {
+  EitherT.monad<ForObservableK, BizError>(ObservableK.monad()).binding { 
     val person = EitherT(findPerson(personId)).bind()
     val address = EitherT(ObservableK.just(
       person.address.toEither { AddressNotFound(personId) }
     )).bind()
     val country = EitherT(findCountry(address.id)).bind()
     country.code
-   }.value()
-  }
+  }.value()
 ```
 
 Here we no longer have to deal with the `Left` cases, and the binding to the values on the left side are already the underlying values we want to focus on instead of the potential biz error values. We have automatically `flatMapped` through the `ObservableK` and `Either` in a single expression reducing the boilerplate and encoding the effects concerns in the type signatures.
@@ -233,20 +234,20 @@ Here we no longer have to deal with the `Left` cases, and the binding to the val
 As `EitherT<F, A ,B>` allows to manipulate the nested `Either` structure, it provides a `mapLeft` method to map over the left element of nested Eithers.
 
 ```kotlin:ank
+import arrow.instances.option.functor.*
+
 EitherT(Option(3.left())).mapLeft(Option.functor(), {it + 1})
 ```
 
-## Available Instances
+### Supported type classes
 
-* [Applicative]({{ '/docs/typeclasses/applicative' | relative_url }})
-* [ApplicativeError]({{ '/docs/typeclasses/applicativeerror' | relative_url }})
-* [Foldable]({{ '/docs/typeclasses/foldable' | relative_url }})
-* [Functor]({{ '/docs/typeclasses/functor' | relative_url }})
-* [Monad]({{ '/docs/typeclasses/monad' | relative_url }})
-* [MonadError]({{ '/docs/typeclasses/monaderror' | relative_url }})
-* [SemigroupK]({{ '/docs/typeclasses/semigroupk' | relative_url }})
-* [Traverse]({{ '/docs/typeclasses/traverse' | relative_url }})
-* [TraverseFilter]({{ '/docs/typeclasses/traversefilter' | relative_url }})
+```kotlin:ank:replace
+import arrow.reflect.*
+import arrow.data.*
+import arrow.core.*
+
+DataType(EitherT::class).tcMarkdownList()
+```
 
 Take a look at the [`OptionT` docs]({{ '/docs/datatypes/optiont' | relative_url }}) for an alternative version of this content with the `OptionT` monad transformer
 

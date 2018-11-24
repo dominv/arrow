@@ -226,6 +226,9 @@ import arrow.*
 import arrow.core.*
 import arrow.typeclasses.*
 import arrow.data.*
+import arrow.instances.validated.applicativeError.*
+import arrow.instances.either.applicativeError.*
+import arrow.instances.nonemptylist.semigroup.*
 
 sealed class ValidationError(val msg: String) {
   data class DoesNotContain(val value: String) : ValidationError("Did not contain $value")
@@ -292,13 +295,12 @@ Rules failFast {
 }
 ```
 
-## Available Instances
+### Supported type classes
 
-* [Show]({{ '/docs/typeclasses/show' | relative_url }})
-* [Eq]({{ '/docs/typeclasses/eq' | relative_url }})
-* [Applicative]({{ '/docs/typeclasses/applicative' | relative_url }})
-* [ApplicativeError]({{ '/docs/typeclasses/applicativeerror' | relative_url }})
-* [Foldable]({{ '/docs/typeclasses/foldable' | relative_url }})
-* [Functor]({{ '/docs/typeclasses/functor' | relative_url }})
-* [SemigroupK]({{ '/docs/typeclasses/semigroupk' | relative_url }})
-* [Traverse]({{ '/docs/typeclasses/traverse' | relative_url }})
+```kotlin:ank:replace
+import arrow.reflect.*
+import arrow.data.*
+import arrow.core.*
+
+DataType(Validated::class).tcMarkdownList()
+```

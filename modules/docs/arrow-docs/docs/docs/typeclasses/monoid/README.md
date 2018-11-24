@@ -39,6 +39,7 @@ ForString extensions {
 
 ```kotlin:ank
 import arrow.core.*
+import arrow.instances.option.monoid.*
 
 Option.monoid(Int.monoid()).run { listOf<Option<Int>>(Some(1), Some(1)).combineAll() }
 ```
@@ -91,9 +92,13 @@ ForListK extensions {
 ```
 
 
-### Data Types
+### Data types
 
-The following data types in Arrow provide instances that adhere to the `Monoid` type class.
+```kotlin:ank:replace
+import arrow.reflect.*
+import arrow.typeclasses.Monoid
 
-- [SequenceK]({{ '/docs/datatypes/sequencek' | relative_url }})
-- [SetK]({{ '/docs/datatypes/setk' | relative_url }})
+TypeClass(Monoid::class).dtMarkdownList()
+```
+
+ank_macro_hierarchy(arrow.typeclasses.Monoid)
