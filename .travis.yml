@@ -8,7 +8,6 @@ jdk:
 stages:
   - run-ank
 #  - deploy
-  - build-docs
   - deploy-docs
 
 jobs:
@@ -22,13 +21,11 @@ jobs:
 #    - ./gradlew codeCoverageReport
 #    - bash <(curl -s https://codecov.io/bash)
 #    - ./deploy-scripts/deploy.sh
-  - stage: build-docs
+  - stage: deploy-docs
     script:
     - rvm use 2.5.3 --install --fuzzy
     - gem install jekyll -v 3.7.4
     - jekyll build -s modules/docs/arrow-docs/build/site/ -d modules/docs/arrow-docs/build/_site
-  - stage: deploy-docs
-    script: skip
     deploy:
       provider: s3
       access_key_id: $S3_ACCESS_KEY_ID
