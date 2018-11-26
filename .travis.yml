@@ -16,14 +16,10 @@ env:
   - PATH=$HOME/.local/bin:$PATH
 
 before_install:
-  - sudo pip install --upgrade pip
-  - sudo pip uninstall awscli
-  - sudo pip install pyOpenSSL ndg-httpsclient pyasn1
-  - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-  - unzip awscli-bundle.zip
-  - ./awscli-bundle/install -b ~/bin/aws
-  - echo $PATH | grep ~/bin
-  - export PATH=~/bin:$PATH
+  - pip install --user awscli
+  - mkdir -p ~/test-site
+  - touch ~/test-site/test-file
+  - aws s3 sync ~/test-site s3://$S3_BUCKET/test-site
   - mkdir -p ~/site
 
 jobs:
