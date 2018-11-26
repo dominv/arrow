@@ -17,7 +17,6 @@ before_install:
   - unzip awscli-bundle.zip
   - ./awscli-bundle/install -b ~/bin/aws
   - export PATH=~/bin:$PATH
-  - sudo pip install --user awscli
   - mkdir -p ~/$TRAVIS_BUILD_NUMBER
   - mkdir -p ~/SITE
   - aws s3 sync s3://S3_BUCKET ~/SITE
