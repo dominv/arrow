@@ -19,17 +19,16 @@ before_install:
   - ./awscli-bundle/install -b ~/bin/aws
   - echo $PATH | grep ~/bin
   - export PATH=~/bin:$PATH
-  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
   - mkdir -p ~/SITE
-  - aws s3 sync s3://$S3_BUCKET ~/SITE
-  - aws s3 sync s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER modules/docs/arrow-docs/build
+  - aws s3 sync ~/SITE s3://$S3_BUCKET
 
 jobs:
   include:
   - stage: run-ank
     script:
     - ./gradlew clean build
-    - ./gradlew dokka :arrow-docs:runAnk >> /dev/null
+    - ./gradlew dokka :arrow-docs:runAnk
+    - aws s3 sync modules/docs/arrow-docs/build s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER
 #  - stage: deploy
 #    script:
 #    - ./gradlew codeCoverageReport
