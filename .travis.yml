@@ -10,17 +10,19 @@ stages:
 #  - deploy
   - deploy-docs
 
+before_install:
+  - pip install --user awscli
+  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
+  - mkdir -p ~/SITE
+  - aws s3 sync s3://S3_BUCKET ~/SITE
+  - aws s3 sync s3://S3_BUCKET/$TRAVIS_BUILD_NUMBER modules/docs/arrow-docs/build
+
 jobs:
   include:
   - stage: run-ank
     script:
     - ./gradlew clean build
     - ./gradlew dokka :arrow-docs:runAnk
-    - pip install --user awscli
-    - mkdir -p ~/$TRAVIS_BUILD_NUMBER
-    - mkdir -p ~/SITE
-    - aws s3 sync s3://S3_BUCKET ~/SITE
-    - aws s3 sync s3://S3_BUCKET/$TRAVIS_BUILD_NUMBER modules/docs/arrow-docs/build
 #  - stage: deploy
 #    script:
 #    - ./gradlew codeCoverageReport
