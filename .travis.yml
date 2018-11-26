@@ -13,8 +13,8 @@ stages:
 before_install:
   - sudo pip install --upgrade pip
   - sudo pip install pyOpenSSL ndg-httpsclient pyasn1
-  - sudo pip uninstall awscli
-  - sudo pip install --user awscli
+  - sudo pip install awscli --force-reinstall --upgrade
+  - export PATH=~/.local/bin:$PATH
   - mkdir -p ~/$TRAVIS_BUILD_NUMBER
   - mkdir -p ~/SITE
   - aws s3 sync s3://S3_BUCKET ~/SITE
