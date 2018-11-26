@@ -11,6 +11,7 @@ stages:
   - deploy-docs
 
 before_install:
+  - sudo chown -R $USER ~/.local
   - sudo pip install --upgrade pip
   - sudo pip install pyOpenSSL ndg-httpsclient pyasn1
   - sudo pip install awscli --force-reinstall --upgrade
