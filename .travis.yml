@@ -20,8 +20,8 @@ before_install:
   - export PATH=~/bin:$PATH
   - mkdir -p ~/$TRAVIS_BUILD_NUMBER
   - mkdir -p ~/SITE
-  - aws s3 sync s3://S3_BUCKET ~/SITE
-  - aws s3 sync s3://S3_BUCKET/$TRAVIS_BUILD_NUMBER modules/docs/arrow-docs/build
+  - sudo aws s3 sync s3://S3_BUCKET ~/SITE
+  - sudo aws s3 sync s3://S3_BUCKET/$TRAVIS_BUILD_NUMBER modules/docs/arrow-docs/build
 
 jobs:
   include:
@@ -39,4 +39,4 @@ jobs:
     - rvm use 2.5.3 --install --fuzzy
     - gem install jekyll -v 3.7.4
     - jekyll build -s ~/$TRAVIS_BUILD_NUMBER/site/ -d ~/SITE
-    - aws s3 rm --recursive s3://S3_BUCKET/$TRAVIS_BUILD_NUMBER # clean up after ourselves
+    - sudo aws s3 rm --recursive s3://S3_BUCKET/$TRAVIS_BUILD_NUMBER # clean up after ourselves
