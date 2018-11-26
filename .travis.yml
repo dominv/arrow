@@ -10,6 +10,11 @@ stages:
 #  - deploy
   - deploy-docs
 
+env:
+  global:
+  # include $HOME/.local/bin for `aws`
+  - PATH=$HOME/.local/bin:$PATH
+
 before_install:
   - sudo pip install --upgrade pip
   - sudo pip uninstall awscli
@@ -19,7 +24,7 @@ before_install:
   - ./awscli-bundle/install -b ~/bin/aws
   - echo $PATH | grep ~/bin
   - export PATH=~/bin:$PATH
-  - mkdir -p ~/SITE
+  - mkdir -p ~/site
   - aws s3 sync ~/SITE s3://$S3_BUCKET
 
 jobs:
@@ -28,7 +33,7 @@ jobs:
     script:
     - ./gradlew clean build
     - ./gradlew dokka :arrow-docs:runAnk
-    - aws s3 sync modules/docs/arrow-docs/build s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER
+    - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER/site
 #  - stage: deploy
 #    script:
 #    - ./gradlew codeCoverageReport
@@ -38,5 +43,7 @@ jobs:
     script:
     - rvm use 2.5.3 --install --fuzzy
     - gem install jekyll -v 3.7.4
-    - jekyll build -s ~/$TRAVIS_BUILD_NUMBER/site/ -d ~/SITE
-    - sudo aws s3 rm --recursive s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER # clean up after ourselves
+    - aws s3 sync s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER/site ~/site
+    - jekyll build -s ~/site -d ~/_site
+    - aws s3 _site s3://$S3_BUCKET
+    - aws s3 rm --recursive s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER # clean up after ourselves
