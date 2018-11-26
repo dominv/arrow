@@ -12,6 +12,11 @@ stages:
 
 before_install:
   - sudo pip install --upgrade pip
+  - sudo pip uninstall awscli
+  - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+  - unzip awscli-bundle.zip
+  - ./awscli-bundle/install -b ~/bin/aws
+  - export PATH=~/bin:$PATH
   - sudo pip install --user awscli
   - mkdir -p ~/$TRAVIS_BUILD_NUMBER
   - mkdir -p ~/SITE
