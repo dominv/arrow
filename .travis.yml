@@ -17,18 +17,16 @@ env:
 
 before_install:
   - pip install --user awscli
-  - mkdir -p ~/test-site
-  - touch ~/test-site/test-file
-  - aws s3 sync ~/test-site s3://$S3_BUCKET/test-site
   - mkdir -p ~/site
 
 jobs:
   include:
   - stage: run-ank
     script:
+    # redirecting outputs to files to avoid exceeding travis' logs limit
     - ./gradlew clean build > build.log
     - ./gradlew dokka :arrow-docs:runAnk > run_ank.log
-    - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/site > aws_sync_ank.log1
+    - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/site > aws_sync_dokka.log
 #  - stage: deploy
 #    script:
 #    - ./gradlew codeCoverageReport
