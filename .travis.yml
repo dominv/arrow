@@ -25,7 +25,6 @@ before_install:
   - echo $PATH | grep ~/bin
   - export PATH=~/bin:$PATH
   - mkdir -p ~/site
-  - aws s3 sync ~/SITE s3://$S3_BUCKET
 
 jobs:
   include:
@@ -33,7 +32,7 @@ jobs:
     script:
     - ./gradlew clean build
     - ./gradlew dokka :arrow-docs:runAnk
-    - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER/site
+    - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/site
 #  - stage: deploy
 #    script:
 #    - ./gradlew codeCoverageReport
@@ -43,7 +42,6 @@ jobs:
     script:
     - rvm use 2.5.3 --install --fuzzy
     - gem install jekyll -v 3.7.4
-    - aws s3 sync s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER/site ~/site
+    - aws s3 sync s3://$S3_BUCKET/site ~/site
     - jekyll build -s ~/site -d ~/_site
-    - aws s3 _site s3://$S3_BUCKET
-    - aws s3 rm --recursive s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER # clean up after ourselves
+    - aws s3 sync _site s3://$S3_BUCKET
