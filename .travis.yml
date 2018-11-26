@@ -13,6 +13,7 @@ stages:
 before_install:
   - sudo pip install --upgrade pip
   - sudo pip install pyOpenSSL ndg-httpsclient pyasn1
+  - sudo pip uninstall awscli
   - sudo pip install --user awscli
   - mkdir -p ~/$TRAVIS_BUILD_NUMBER
   - mkdir -p ~/SITE
