@@ -17,11 +17,12 @@ before_install:
   - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
   - unzip awscli-bundle.zip
   - ./awscli-bundle/install -b ~/bin/aws
+  - echo $PATH | grep ~/bin
   - export PATH=~/bin:$PATH
   - mkdir -p ~/$TRAVIS_BUILD_NUMBER
   - mkdir -p ~/SITE
-  - sudo aws s3 sync s3://S3_BUCKET ~/SITE
-  - sudo aws s3 sync s3://S3_BUCKET/$TRAVIS_BUILD_NUMBER modules/docs/arrow-docs/build
+  - aws s3 sync s3://$S3_BUCKET ~/SITE
+  - aws s3 sync s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER modules/docs/arrow-docs/build
 
 jobs:
   include:
@@ -39,4 +40,4 @@ jobs:
     - rvm use 2.5.3 --install --fuzzy
     - gem install jekyll -v 3.7.4
     - jekyll build -s ~/$TRAVIS_BUILD_NUMBER/site/ -d ~/SITE
-    - sudo aws s3 rm --recursive s3://S3_BUCKET/$TRAVIS_BUILD_NUMBER # clean up after ourselves
+    - sudo aws s3 rm --recursive s3://$S3_BUCKET/$TRAVIS_BUILD_NUMBER # clean up after ourselves
