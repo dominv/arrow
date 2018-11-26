@@ -11,11 +11,8 @@ stages:
   - deploy-docs
 
 before_install:
-  - sudo chown -R $USER ~/.local
   - sudo pip install --upgrade pip
-  - sudo pip install pyOpenSSL ndg-httpsclient pyasn1
-  - sudo pip install awscli --force-reinstall --upgrade
-  - export PATH=~/.local/bin:$PATH
+  - sudo pip install --user awscli
   - mkdir -p ~/$TRAVIS_BUILD_NUMBER
   - mkdir -p ~/SITE
   - aws s3 sync s3://S3_BUCKET ~/SITE
