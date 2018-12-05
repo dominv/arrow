@@ -48,12 +48,12 @@ jobs:
 #   - ./deploy-scripts/deploy.sh
  - stage: deploy-docs
    script:
-   - aws s3 sync s3://$S3_BUCKET/site ~/site > aws_sync_jekyll.log
+   - aws s3 sync s3://$S3_BUCKET/site ~/site
    - ls ~/site/docs/typeclasses/hash
    - rvm use 2.5.3 --install --fuzzy
    - bundle install --gemfile modules/docs/arrow-docs/Gemfile --path vendor/bundle
    - export BUNDLE_GEMFILE=modules/docs/arrow-docs/Gemfile
    - travis_wait 10 bundle exec jekyll build -s ~/site -d ~/_site
    - ls ~/_site/docs/typeclasses/hash
-   - aws s3 sync ~/_site s3://$S3_BUCKET > aws_sync_site.log
+   - aws s3 sync ~/_site s3://$S3_BUCKET
 
