@@ -131,16 +131,6 @@ import arrow.typeclasses.Hash
 TypeClass(Hash::class).dtMarkdownList()
 ```
 
-### Hierarchy
-
-<canvas id="hierarchy-diagram"></canvas>
-<script>
-  drawNomNomlDiagram('hierarchy-diagram', 'diagram.nomnol')
-</script>
-
-```kotlin:ank:outFile(diagram.nomnol)
-import arrow.typeclasses.Hash
-TypeClass(Hash::class).hierarchyGraph()
-```
+ank_macro_hierarchy(arrow.typeclasses.Hash)
 
 [hash_laws_source]: https://github.com/arrow-kt/arrow/blob/master/modules/core/arrow-test/src/main/kotlin/arrow/test/laws/HashLaws.kt
