@@ -25,7 +25,7 @@ env:
  global:
  # include $HOME/.local/bin for `aws`
  - PATH=$HOME/.local/bin:$PATH
- - JAVA_OPTS="-Xms512m -Xmx1024m"
+ - JAVA_OPTS="-Xms1638m -Xmx4g"
 
 before_install:
 - pip install --user awscli
