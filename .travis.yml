@@ -6,7 +6,7 @@ jdk:
 - oraclejdk8
 
 stages:
-- name: dokka
+- name: build-and-dokka
 - name: transfer
   if: branch = master AND type != pull_request
 - name: coverage-report
@@ -28,10 +28,9 @@ before_install:
 
 jobs:
  include:
- - stage: build
+ - stage: build-and-dokka
    script:
    - ./gradlew clean build
- - stage: dokka
    script:
    - travis_wait 10 ./gradlew dokka :arrow-docs:runAnk
  - stage: transfer
