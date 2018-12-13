@@ -22,7 +22,7 @@ env:
  global:
  # include $HOME/.local/bin for `aws`
  - PATH=$HOME/.local/bin:$PATH
- - JAVA_OPTS="-Xms2g -Xmx4g -XX:-UseGCOverheadLimit"
+ - JAVA_OPTS="-Xms4g -Xmx6g -XX:-UseGCOverheadLimit -XX:MaxGCPauseMillis=500000"
 
 before_install:
 - pip install --user awscli
@@ -42,6 +42,9 @@ jobs:
    script:
    - aws s3 sync s3://$S3_BUCKET/apidocs modules/docs/arrow-docs/docs/docs/apidocs > aws_download_dokka.log
    - sudo cat /proc/meminfo
+   - java -XX:+PrintFlagsFinal -version | grep HeapSize
+   - java -Xms2g -Xmx4g -XX:-UseGCOverheadLimit -XX:MaxGCPauseMillis=500000
+   - java -XX:+PrintFlagsFinal -version | grep HeapSize
    - ./gradlew :arrow-docs:runAnk
  - stage: ank-sync
    script:
