@@ -9,9 +9,11 @@ before_script:
   - "echo $JAVA_OPTS"
 
 stages:
-- name: build-and-dokka
+- name: build
+- name: dokka
+- name: ank
   if: branch != master OR type = pull_request
-- name: build-and-dokka-transfer
+- name: ank-sync
   if: branch = master AND type != pull_request
 - name: coverage-report
   if: branch = master
@@ -32,16 +34,22 @@ before_install:
 
 jobs:
  include:
- - stage: build-and-dokka
+ - stage: build
+   script: ./gradlew clean build
+ - stage: dokka
    script:
    - ./gradlew clean build dokka
-   - ./gradlew :arrow-docs:runAnk
- - stage: build-and-dokka-transfer
-   script:
-   - ./gradlew clean build dokka
-   - ./gradlew :arrow-docs:runAnk
    # redirecting outputs to files to avoid exceeding travis' logs limit
-   - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/site > aws_sync_dokka.log
+   - aws s3 sync modules/docs/arrow-docs/docs/docs/apidocs s3://$S3_BUCKET/apidocs > aws_upload_dokka.log
+ - stage: ank
+   script:
+   - aws s3 sync s3://$S3_BUCKET/apidocs modules/docs/arrow-docs/docs/docs/apidocs > aws_download_dokka.log
+   - ./gradlew :arrow-docs:runAnk
+ - stage: ank-sync
+   script:
+   - aws s3 sync s3://$S3_BUCKET/apidocs modules/docs/arrow-docs/docs/docs/apidocs > aws_download_dokka.log
+   - ./gradlew :arrow-docs:runAnk
+   - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/site > aws_upload_ank.log
  - stage: coverage-report
    script:
    - ./gradlew codeCoverageReport
