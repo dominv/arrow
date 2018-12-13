@@ -7,7 +7,6 @@ jdk:
 
 stages:
 - name: dokka
-  if: branch != master OR type = pull_request
 - name: transfer
   if: branch = master AND type != pull_request
 - name: coverage-report
