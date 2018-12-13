@@ -10,10 +10,10 @@ stages:
   if: branch != master OR type = pull_request
 - name: build-and-dokka-transfer
   if: branch = master AND type != pull_request
-#- name: coverage-report
-#  if: branch = master
-#- name: deploy
-#  if: branch = master AND type != pull_request
+- name: coverage-report
+  if: branch = master
+- name: deploy
+  if: branch = master AND type != pull_request
 - name: deploy-docs
   if: branch = master AND type != pull_request
 
@@ -39,20 +39,18 @@ jobs:
    - ./gradlew clean build
    - ./gradlew dokka :arrow-docs:runAnk
    - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/site > aws_sync_dokka.log
-# - stage: coverage-report
-#   script:
-#   - ./gradlew codeCoverageReport
-#   - bash <(curl -s https://codecov.io/bash)
-# - stage: deploy
-#   script:
-#   - ./deploy-scripts/deploy.sh
+ - stage: coverage-report
+   script:
+   - ./gradlew codeCoverageReport
+   - bash <(curl -s https://codecov.io/bash)
+ - stage: deploy
+   script:
+   - ./deploy-scripts/deploy.sh
  - stage: deploy-docs
    script:
    - aws s3 sync s3://$S3_BUCKET/site ~/site > aws_sync_jekyll.log
-   - ls ~/site/docs/typeclasses/hash
    - rvm use 2.5.3 --install --fuzzy
    - bundle install --gemfile modules/docs/arrow-docs/Gemfile --path vendor/bundle
    - export BUNDLE_GEMFILE=modules/docs/arrow-docs/Gemfile
    - travis_wait 10 bundle exec jekyll build -s ~/site -d ~/_site
-   - ls ~/_site/docs/typeclasses/hash
    - aws s3 sync ~/_site s3://$S3_BUCKET > aws_sync_site.log
