@@ -9,8 +9,7 @@ before_script:
   - "echo $JAVA_OPTS"
 
 stages:
-- name: build
-- name: dokka
+- name: build-and-dokka
 - name: ank
   if: branch != master OR type = pull_request
 - name: ank-sync
@@ -34,11 +33,10 @@ before_install:
 
 jobs:
  include:
- - stage: build
+ - stage: build-and-dokka
    script: ./gradlew clean build
- - stage: dokka
-   script:
-   - ./gradlew clean build dokka
+ - script:
+   - ./gradlew dokka
    # redirecting outputs to files to avoid exceeding travis' logs limit
    - aws s3 sync modules/docs/arrow-docs/docs/docs/apidocs s3://$S3_BUCKET/apidocs > aws_upload_dokka.log
  - stage: ank
