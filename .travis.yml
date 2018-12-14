@@ -6,7 +6,7 @@ jdk:
 - oraclejdk8
 
 stages:
-- name: build-and-dokka
+#- name: build-and-dokka
 - name: ank
   if: branch != master OR type = pull_request
 - name: ank-sync
@@ -30,14 +30,14 @@ before_install:
 
 jobs:
  include:
- - stage: build-and-dokka
-   name: "Build"
-   script: ./gradlew clean build
- - script:
-   - ./gradlew dokka
-   # redirecting outputs to files to avoid exceeding travis' logs limit
-   - aws s3 sync modules/docs/arrow-docs/docs/docs/apidocs s3://$S3_BUCKET/apidocs > aws_upload_dokka.log
-   name: "Dokka"
+# - stage: build-and-dokka
+#   name: "Build"
+#   script: ./gradlew clean build
+# - script:
+#   - ./gradlew dokka
+#   # redirecting outputs to files to avoid exceeding travis' logs limit
+#   - aws s3 sync modules/docs/arrow-docs/docs/docs/apidocs s3://$S3_BUCKET/apidocs > aws_upload_dokka.log
+#   name: "Dokka"
  - stage: ank
    script:
    - aws s3 sync s3://$S3_BUCKET/apidocs modules/docs/arrow-docs/docs/docs/apidocs > aws_download_dokka.log
