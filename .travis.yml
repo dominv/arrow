@@ -41,12 +41,14 @@ jobs:
  - stage: ank
    script:
    - aws s3 sync s3://$S3_BUCKET/apidocs modules/docs/arrow-docs/docs/docs/apidocs > aws_download_dokka.log
+   - export JAVA_OPTS="-Xms2g -Xmx4g -XX:-UseGCOverheadLimit"
    - sudo cat /proc/meminfo
    - java -XX:+PrintFlagsFinal -version | grep HeapSize
    - ./gradlew :arrow-docs:runAnk
  - stage: ank-sync
    script:
    - aws s3 sync s3://$S3_BUCKET/apidocs modules/docs/arrow-docs/docs/docs/apidocs > aws_download_dokka.log
+   - export JAVA_OPTS="-Xms2g -Xmx4g -XX:-UseGCOverheadLimit"
    - sudo cat /proc/meminfo
    - ./gradlew :arrow-docs:runAnk
    - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/site > aws_upload_ank.log
