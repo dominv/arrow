@@ -13,7 +13,7 @@ jobs:
     - run: sudo chmod +x ./gradlew
     - run:
         name: Run dokka
-        command: ./gradlew dokka
+        command: ./gradlew dokka -Dorg.gradle.daemon=false -Dorg.gradle.parallel=false -Dkotlin.incremental=false
   ank:
     docker:
     - image: circleci/openjdk:8-jdk
