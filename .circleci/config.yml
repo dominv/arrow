@@ -2,7 +2,9 @@ version: 2
 jobs:
   dokka:
     docker:
-    - image: circleci/openjdk:8-jdk
+    - image: circleci/android:api-25-alpha
+    environment:
+      JVM_OPTS: -Xmx4g
     working_directory: ~/arrow
     steps:
     - checkout
@@ -11,9 +13,9 @@ jobs:
         command: ./gradlew dokka
   ank:
     docker:
-    - image: circleci/openjdk:8-jdk
+    - image: circleci/android:api-25-alpha
     environment:
-      JVM_OPTS: -Xms512m -Xmx3200m
+      JVM_OPTS: -Xmx4g
     working_directory: ~/arrow
     steps:
     - run:
@@ -21,9 +23,9 @@ jobs:
         command: ./gradlew :arrow-docs:runAnk
   ank-master:
     docker:
-    - image: circleci/openjdk:8-jdk
+    - image: circleci/android:api-25-alpha
     environment:
-      JVM_OPTS: -Xms512m -Xmx3200m
+      JVM_OPTS: -Xmx4g
     working_directory: ~/arrow
     steps:
     - run:
