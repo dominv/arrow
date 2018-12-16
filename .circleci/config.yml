@@ -2,7 +2,7 @@ version: 2
 jobs:
   dokka:
     docker:
-    - image: circleci/openjdk:8-jdk
+    - image: circleci/android:api-28-alpha
     environment:
       JVM_OPTS: -Xmx10g -Dkotlin.compiler.execution.strategy=“in-process”
       GRADLE_OPTS: -Dorg.gradle.daemon=false
