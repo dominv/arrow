@@ -2,7 +2,7 @@ version: 2
 jobs:
   dokka:
     docker:
-    - image: ubuntu:14.04
+    - image: circleci/openjdk:8-jdk
     working_directory: ~/arrow
     steps:
     - checkout
@@ -11,7 +11,9 @@ jobs:
         command: ./gradlew dokka
   ank:
     docker:
-    - image: ubuntu:14.04
+    - image: circleci/openjdk:8-jdk
+    environment:
+      JVM_OPTS: -Xms512m -Xmx3200m
     working_directory: ~/arrow
     steps:
     - run:
@@ -19,7 +21,9 @@ jobs:
         command: ./gradlew :arrow-docs:runAnk
   ank-master:
     docker:
-    - image: ubuntu:14.04
+    - image: circleci/openjdk:8-jdk
+    environment:
+      JVM_OPTS: -Xms512m -Xmx3200m
     working_directory: ~/arrow
     steps:
     - run:
