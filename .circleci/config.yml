@@ -5,6 +5,7 @@ jobs:
     - image: ubuntu:14.04
     working_directory: ~/arrow
     steps:
+    - checkout
     - run:
         name: Run dokka
         command: ./gradlew dokka
