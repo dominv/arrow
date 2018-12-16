@@ -2,21 +2,13 @@ version: 2
 jobs:
   dokka:
     docker:
-    - image: circleci/android:api-25-alpha
+    - image: - image: circleci/openjdk:8-jdk-browsers
     environment:
       JVM_OPTS: -Xmx3200m
     working_directory: ~/arrow
     steps:
     - checkout
-    - restore_cache:
-        key: gradle-{{ checksum "build.gradle" }}-{{ checksum  "buildSrc/src/main/java/Dependencies.kt" }}
-    - run:
-        name: Download Dependencies
-        command: ./gradlew checkDependenciesVersion
-    - save_cache:
-        paths:
-        - ~/.gradle
-        key: gradle-{{ checksum "build.gradle" }}-{{ checksum  "buildSrc/src/main/java/Dependencies.kt" }}
+    - run: gradle test
     - run:
         name: Run dokka
         command: ./gradlew dokka
