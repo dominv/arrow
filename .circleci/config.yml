@@ -8,6 +8,8 @@ jobs:
     working_directory: ~/arrow
     steps:
     - checkout
+    - run: pwd
+    - run: ls
     - run: gradle test
     - run:
         name: Run dokka
