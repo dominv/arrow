@@ -8,7 +8,6 @@ jobs:
     working_directory: ~/arrow
     steps:
     - checkout
-    - run: gradle wrapper
     - run:
         name: Run dokka
         command: ./gradlew dokka
