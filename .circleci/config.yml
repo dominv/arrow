@@ -11,10 +11,10 @@ jobs:
     - checkout
     - run: sudo cat /proc/meminfo
     - run: java -XX:+PrintFlagsFinal -version | grep HeapSize
+    - run: sudo chmod +x ./gradlew
     - run:
         name: Run dokka
-        command: sudo ./gradlew dokka
-
+        command: ./gradlew dokka
   ank:
     docker:
     - image: circleci/openjdk:8-jdk
