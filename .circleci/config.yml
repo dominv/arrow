@@ -9,6 +9,8 @@ jobs:
     working_directory: ~/arrow
     steps:
     - checkout
+    - run: sudo cat /proc/meminfo
+    - run: java -XX:+PrintFlagsFinal -version | grep HeapSize
     - run:
         name: Run dokka
         command: ./gradlew dokka
