@@ -2,7 +2,7 @@ version: 2
 jobs:
   dokka:
     docker:
-    - image: - image: circleci/openjdk:8-jdk-browsers
+    - image: circleci/openjdk:8-jdk-browsers
     environment:
       JVM_OPTS: -Xmx3200m
     working_directory: ~/arrow
