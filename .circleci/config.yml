@@ -5,7 +5,6 @@ jobs:
     - image: circleci/openjdk:8-jdk
     environment:
       JVM_OPTS: -Xmx4g
-      GRADLE_OPTS: -Dorg.gradle.daemon=false -Dorg.gradle.parallel=false -Dkotlin.incremental=false -Dkotlin.compiler.execution.strategy=in-process
     working_directory: ~/arrow
     steps:
     - checkout
