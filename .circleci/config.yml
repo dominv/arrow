@@ -47,7 +47,9 @@ workflows:
   build-docs:
     jobs:
     - build
-    - dokka
+    - dokka:
+        requires:
+        - dokka
     - ank:
         requires:
         - dokka
