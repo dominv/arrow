@@ -49,7 +49,7 @@ workflows:
     - build
     - dokka:
         requires:
-        - dokka
+        - build
     - ank:
         requires:
         - dokka
