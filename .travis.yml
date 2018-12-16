@@ -6,52 +6,47 @@ jdk:
 - oraclejdk8
 
 stages:
-#- name: build-and-dokka
-- name: ank
-  if: branch != master OR type = pull_request
-- name: ank-sync
-  if: branch = master AND type != pull_request
+- name: build
+#- name: ank
+#  if: branch != master OR type = pull_request
+#- name: ank-sync
+#  if: branch = master AND type != pull_request
 - name: coverage-report
   if: branch = master
 - name: deploy
   if: branch = master AND type != pull_request
-- name: deploy-docs
-  if: branch = master AND type != pull_request
+#- name: deploy-docs
+#  if: branch = master AND type != pull_request
 
 env:
  global:
  # include $HOME/.local/bin for `aws`
- - PATH=$HOME/.local/bin:$PATH
- - JAVA_OPTS="-Xms1g -Xmx2g -XX:-UseGCOverheadLimit"
+# - PATH=$HOME/.local/bin:$PATH
+ - JAVA_OPTS="-Xms512m -Xmx1024m"
 
-before_install:
-- pip install --user awscli
-- mkdir -p ~/site
+#before_install:
+#- pip install --user awscli
+#- mkdir -p ~/site
 
 jobs:
  include:
-# - stage: build-and-dokka
-#   name: "Build"
-#   script: ./gradlew clean build
+ - stage: build
+   name: "Build"
+   script: ./gradlew clean build
 # - script:
 #   - ./gradlew dokka
 #   # redirecting outputs to files to avoid exceeding travis' logs limit
 #   - aws s3 sync modules/docs/arrow-docs/docs/docs/apidocs s3://$S3_BUCKET/apidocs > aws_upload_dokka.log
-#   name: "Dokka"
- - stage: ank
-   script:
-   - aws s3 sync s3://$S3_BUCKET/apidocs modules/docs/arrow-docs/docs/docs/apidocs > aws_download_dokka.log
-   - export JAVA_OPTS="-Xms2g -Xmx4g -XX:-UseGCOverheadLimit"
-   - sudo cat /proc/meminfo
-   - java -XX:+PrintFlagsFinal -version | grep HeapSize
-   - ./gradlew :arrow-docs:runAnk
- - stage: ank-sync
-   script:
-   - aws s3 sync s3://$S3_BUCKET/apidocs modules/docs/arrow-docs/docs/docs/apidocs > aws_download_dokka.log
-   - export JAVA_OPTS="-Xms2g -Xmx4g -XX:-UseGCOverheadLimit"
-   - sudo cat /proc/meminfo
-   - ./gradlew :arrow-docs:runAnk
-   - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/site > aws_upload_ank.log
+   name: "Dokka"
+# - stage: ank
+#   script:
+#   - aws s3 sync s3://$S3_BUCKET/apidocs modules/docs/arrow-docs/docs/docs/apidocs > aws_download_dokka.log
+#   - ./gradlew :arrow-docs:runAnk
+# - stage: ank-sync
+#   script:
+#   - aws s3 sync s3://$S3_BUCKET/apidocs modules/docs/arrow-docs/docs/docs/apidocs > aws_download_dokka.log
+#   - ./gradlew :arrow-docs:runAnk
+#   - aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/site > aws_upload_ank.log
  - stage: coverage-report
    script:
    - ./gradlew codeCoverageReport
@@ -59,11 +54,11 @@ jobs:
  - stage: deploy
    script:
    - ./deploy-scripts/deploy.sh
- - stage: deploy-docs
-   script:
-   - aws s3 sync s3://$S3_BUCKET/site ~/site > aws_sync_jekyll.log
-   - rvm use 2.5.3 --install --fuzzy
-   - bundle install --gemfile modules/docs/arrow-docs/Gemfile --path vendor/bundle
-   - export BUNDLE_GEMFILE=modules/docs/arrow-docs/Gemfile
-   - travis_wait 10 bundle exec jekyll build -s ~/site -d ~/_site
-   - aws s3 sync ~/_site s3://$S3_BUCKET > aws_sync_site.log
+# - stage: deploy-docs
+#   script:
+#   - aws s3 sync s3://$S3_BUCKET/site ~/site > aws_sync_jekyll.log
+#   - rvm use 2.5.3 --install --fuzzy
+#   - bundle install --gemfile modules/docs/arrow-docs/Gemfile --path vendor/bundle
+#   - export BUNDLE_GEMFILE=modules/docs/arrow-docs/Gemfile
+#   - travis_wait 10 bundle exec jekyll build -s ~/site -d ~/_site
+#   - aws s3 sync ~/_site s3://$S3_BUCKET > aws_sync_site.log
