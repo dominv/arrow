@@ -10,7 +10,7 @@ jobs:
     - checkout
     - run:
         name: Build
-        command: ./gradlew clean build
+        command: ./gradlew clean build --no-daemon
   dokka:
     docker:
     - image: circleci/openjdk:8-jdk
