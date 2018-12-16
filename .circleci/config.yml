@@ -8,9 +8,10 @@ jobs:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     working_directory: ~/arrow
     steps:
+    - checkout
     - run:
         name: Run dokka
-        command: ./gradlew dokka --no-daemon
+        command: ./gradlew dokka
   ank:
     docker:
     - image: circleci/openjdk:8-jdk
@@ -21,7 +22,7 @@ jobs:
     steps:
     - run:
         name: Run Ank if dokka pass and branch is not Master
-        command: ./gradlew :arrow-docs:runAnk --no-daemon
+        command: ./gradlew :arrow-docs:runAnk
   ank-master:
     docker:
     - image: circleci/openjdk:8-jdk
@@ -31,7 +32,7 @@ jobs:
     steps:
     - run:
         name: Run Ank if dokka pass and branch is Master
-        command: ./gradlew :arrow-docs:runAnk --no-daemon
+        command: ./gradlew :arrow-docs:runAnk
 
 workflows:
   version: 2
