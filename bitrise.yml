@@ -5,7 +5,7 @@ project_type: other
 workflows:
   pullrequest:
     envs:
-      - _JAVA_OPTIONS: "-Xms512m -Xmx4g"
+    - _JAVA_OPTIONS: "-Xms512m -Xmx4g"
     steps:
     - script:
         deps:
@@ -17,5 +17,8 @@ workflows:
         - content: |-
             #!/usr/bin/env bash
             set -ex
-            ./gradlew build dokka :arrow-docs:runAnk
-            aws s3 sync modules/docs/arrow-docs/build/site s3://$S3_BUCKET/ank-site > aws_sync_ank.log
+#            ./gradlew build dokka :arrow-docs:runAnk
+            bundle install --gemfile modules/docs/arrow-docs/Gemfile --path vendor/bundle
+            export BUNDLE_GEMFILE=modules/docs/arrow-docs/Gemfile
+            bundle exec jekyll build -s ~/site -d ~/_site
+            aws s3 sync modules/docs/arrow-docs/build/_site s3://$S3_BUCKET/jekyll-site > aws_sync_jekyll.log
