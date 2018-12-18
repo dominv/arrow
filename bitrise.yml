@@ -52,11 +52,6 @@ workflows:
           apt_get:
           - name: awscli
             bin_name: aws
-    - script:
-        deps:
-          apt_get:
-          - name: awscli
-            bin_name: aws
         title: Build and deploy docs
         inputs:
         - content: |-
