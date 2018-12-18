@@ -7,10 +7,10 @@ jdk:
 
 stages:
 - name: build
-- name: coverage-report
-  if: branch = master
-- name: deploy
-  if: branch = master AND type != pull_request
+#- name: coverage-report
+#  if: branch = master
+#- name: deploy
+#  if: branch = master AND type != pull_request
 
 env:
   global:
@@ -21,10 +21,10 @@ jobs:
   - stage: build
     script:
     - ./gradlew clean build
-  - stage: coverage-report
-    script:
-    - ./gradlew codeCoverageReport
-    - bash <(curl -s https://codecov.io/bash)
-  - stage: deploy
-    script:
-    - ./deploy-scripts/deploy.sh
+#  - stage: coverage-report
+#    script:
+#    - ./gradlew codeCoverageReport
+#    - bash <(curl -s https://codecov.io/bash)
+#  - stage: deploy
+#    script:
+#    - ./deploy-scripts/deploy.sh
