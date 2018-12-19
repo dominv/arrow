@@ -12,7 +12,7 @@ trigger_map:
 workflows:
   build:
     envs:
-    - _GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
+    - GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
     - _JAVA_OPTIONS: -Xms512m -Xmx4g
     steps:
     - script:
@@ -31,7 +31,7 @@ workflows:
             ./gradlew :arrow-docs:runAnk
   deploy:
     envs:
-    - _GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
+    - GRADLE_OPTS: -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
     - _JAVA_OPTIONS: -Xms512m -Xmx4g
     steps:
     - script:
