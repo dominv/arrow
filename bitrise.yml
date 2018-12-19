@@ -12,7 +12,7 @@ trigger_map:
 workflows:
   build:
     envs:
-    - _JAVA_OPTIONS: -Xms512m -Xmx4g
+    - _JAVA_OPTIONS: -Xms512m -Xmx6g
     steps:
     - script:
         title: dokka
@@ -27,10 +27,10 @@ workflows:
         - content: |-
             #!/usr/bin/env bash
             set -ex
-            ./gradlew :arrow-docs:runAnk -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
+            ./gradlew :arrow-docs:runAnk -Dorg.gradle.jvmargs="-Xmx6g -XX:+HeapDumpOnOutOfMemoryError"
   deploy:
     envs:
-    - _JAVA_OPTIONS: -Xms512m -Xmx4g
+    - _JAVA_OPTIONS: -Xms512m -Xmx6g
     steps:
     - script:
         title: dokka
@@ -45,7 +45,7 @@ workflows:
         - content: |-
             #!/usr/bin/env bash
             set -ex
-            ./gradlew :arrow-docs:runAnk -Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
+            ./gradlew :arrow-docs:runAnk -Dorg.gradle.jvmargs="-Xmx6g -XX:+HeapDumpOnOutOfMemoryError"
     - script:
            deps:
              apt_get:
