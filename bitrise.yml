@@ -30,7 +30,7 @@ workflows:
             ./gradlew :arrow-docs:runAnk
   deploy:
     envs:
-    - _JAVA_OPTIONS: "-Xms512m -Xmx4g"
+    - JAVA_OPTIONS: "-Xms512m -Xmx4g"
     - GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"'
     steps:
     - script:
