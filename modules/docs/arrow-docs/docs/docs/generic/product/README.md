@@ -93,15 +93,15 @@ hListOf(1000, 900).toAccount()
 
 `@product` allows us map independent values in the context of any `Applicative` capable data type straight to the data class inside the data type context
 
-In the examples below we can observe how 2 different `Int` properties are returned inside a type constructor such as `Option`, `Try`, `Deferred` etc... and the automatically mapped to the shape of our `Account` data class removing all boilerplate from extracting the values from their context and returning an `Account` value in the same context.
+In the examples below we can observe how 2 different `Int` properties are returned inside a type constructor such as `Option`, `Try`, `IO` etc... and the automatically mapped to the shape of our `Account` data class removing all boilerplate from extracting the values from their context and returning an `Account` value in the same context.
 
 ```kotlin:ank
-import arrow.instances.*
+import arrow.core.extensions.option.applicative.applicative
 
 val maybeBalance: Option<Int> = Option(1000)
 val maybeAvailable: Option<Int> = Option(900)
 
-ForOption extensions { 
+Option.applicative().run { 
   mapToAccount(maybeBalance, maybeAvailable)
 }
 ```
@@ -110,16 +110,18 @@ ForOption extensions {
 val maybeBalance: Option<Int> = Option(1000)
 val maybeAvailable: Option<Int> = None
 
-ForOption extensions { 
+Option.applicative().run {  
   mapToAccount(maybeBalance, maybeAvailable) 
 }
 ```
 
 ```kotlin:ank
+import arrow.core.extensions.`try`.applicative.applicative
+
 val tryBalance: Try<Int> = Try { 1000 }
 val tryAvailable: Try<Int> = Try { 900 }
 
-ForTry extensions { 
+Try.applicative().run { 
   mapToAccount(tryBalance, tryAvailable)
 }
 ```
@@ -128,19 +130,19 @@ ForTry extensions {
 val tryBalance: Try<Int> = Try { 1000 }
 val tryAvailable: Try<Int> = Try { throw RuntimeException("BOOM") }
 
-ForTry extensions { 
+Try.applicative().run { 
   mapToAccount(tryBalance, tryAvailable)
 }
 ```
 
 ```kotlin:ank
 import arrow.effects.*
-import kotlinx.coroutines.async
+import arrow.effects.extensions.io.applicative.applicative
 
-val asyncBalance: DeferredK<Int> = DeferredK { 1000 }
-val asyncAvailable: DeferredK<Int> = DeferredK { 900 }
+val asyncBalance: IO<Int> = IO { 1000 }
+val asyncAvailable: IO<Int> = IO { 900 }
 
-ForDeferredK extensions { 
+IO.applicative().run {  
   mapToAccount(asyncBalance, asyncAvailable)
 }
 ```

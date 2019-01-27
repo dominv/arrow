@@ -14,6 +14,13 @@
         padding-bottom: ($base-point-grid * 12);
     }
 
+    &.error {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      padding: 0;
+    }
+
     .masthead-background {
       position: absolute;
       height: 100%;
@@ -58,7 +65,7 @@
             transform-style: preserve-3d;
         }
 
-        .masthead-title {
+        .masthead-title, .masthead-subtitle {
             margin-top: ($base-point-grid * 2);
             font-size: 3rem;
             font-weight: $font-regular;
@@ -70,6 +77,14 @@
 
             @include bp(large) {
                 font-size: 2rem;
+            }
+        }
+
+        .masthead-subtitle {
+            font-size: 1.5rem;
+
+            @include bp(large) {
+                font-size: 1rem;
             }
         }
 

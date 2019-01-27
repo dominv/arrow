@@ -139,16 +139,15 @@ Arrow provides [monadic comprehensions]({{ '/docs/patterns/monad_comprehensions'
 
 ```kotlin
 import arrow.typeclasses.*
-import arrow.instances.*
+import arrow.data.extensions.*
+import arrow.data.extensions.option.monad.binding
 
 fun attackOption(): Option<Impacted> =
-  ForOption extensions {
-    binding {
-        val nuke = arm().bind()
-        val target = aim().bind()
-        val impact = launch(target, nuke).bind()
-        impact
-    }.fix()
+  binding {
+    val (nuke) = arm()
+    val (target) = aim()
+    val (impact) = launch(target, nuke)
+    impact
   }
 
 attackOption()
@@ -200,14 +199,14 @@ Just like it does for `Option`, Arrow also provides `Monad` instances for `Try` 
 
 ```kotlin
 import arrow.typeclasses.*
-import arrow.instances.*
+import arrow.data.extensions.*
 
 fun attackTry(): Try<Impacted> =
   ForTry extensions {
     binding {
-      val nuke = arm().bind()
-      val target = aim().bind()
-      val impact = launch(target, nuke).bind()
+      val (nuke) = arm()
+      val (target) = aim()
+      val (impact) = launch(target, nuke)
       impact
    }.fix()
   }
@@ -261,14 +260,14 @@ Except for the types signatures our program remains unchanged when we compute ov
 All values on the left side assume to be `Right` biased and whenever a `Left` value is found the computation short-circuits producing a result that is compatible with the function type signature.
 
 ```kotlin
+import arrow.core.extensions.either.monad.binding
+
 fun attackEither(): Either<NukeException, Impacted> =
-  ForEither<NukeException>() extensions {
-   binding {
-    val nuke = arm().bind()
-    val target = aim().bind()
-    val impact = launch(target, nuke).bind()
+  binding {
+    val (nuke) = arm()
+    val (target) = aim()
+    val (impact) = launch(target, nuke)
     impact
-   }.fix()
   }
   
 attackEither()
@@ -288,19 +287,19 @@ Typeclasses allows us to code focusing on the behaviors and not the datatypes th
 Arrow provides the following `MonadError` instances for `Option`, `Try` and `Either`
 
 ```kotlin:ank
-import arrow.instances.option.monadError.*
+import arrow.core.extensions.option.monadError.*
 
 Option.monadError()
 ```
 
 ```kotlin:ank
-import arrow.instances.`try`.monadError.*
+import arrow.core.extensions.`try`.monadError.*
 
 Try.monadError()
 ```
 
 ```kotlin:ank
-import arrow.instances.either.monadError.*
+import arrow.core.extensions.either.monadError.*
 
 Either.monadError<NukeException>()
 ```
@@ -320,9 +319,9 @@ We can now express the same program as before in a fully polymorphic context
 ```kotlin
 fun <F> MonadError<F, NukeException>.attack():Kind<F, Impacted> =
   binding {
-    val nuke = arm<F>().bind()
-    val target = aim<F>().bind()
-    val impact = launch<F>(target, nuke).bind()
+    val (nuke) = arm<F>()
+    val (target) = aim<F>()
+    val (impact) = launch<F>(target, nuke)
     impact
   }
 ```
@@ -350,8 +349,8 @@ fun <f> MonadError<F, NukeException>.launchImjust(target: Target, nuke: Nuke): I
 
 fun <f> MonadError<F, NukeException>.attack(): Kind<F, Impacted> =
   bindingCatch {
-    val nuke = arm<F>().bind()
-    val target = aim<F>().bind()
+    val (nuke) = arm<F>()
+    val (target) = aim<F>()
     val impact = launchImpure<F>(target, nuke)
     impact
   }

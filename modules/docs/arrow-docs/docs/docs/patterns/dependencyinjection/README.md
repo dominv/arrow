@@ -81,15 +81,18 @@ fun <F> Functor<F>.multiplyBy2(fa: Kind<F, Int>): Kind<F, Int> =
 And we can call it on the typeclass instances:
 
 ```kotlin:ank
-import arrow.instances.*
+import arrow.core.extensions.*
+import arrow.core.extensions.option.functor.functor
 
-ForOption extensions { 
+Option.functor().run { 
   multiplyBy2(Option(1)) 
 }
 ```
 
 ```kotlin:ank
-ForTry extensions { 
+import arrow.core.extensions.`try`.functor.functor
+
+Try.functor().run { 
   multiplyBy2(Try.just(1))
 }
 ```
@@ -136,7 +139,7 @@ object FunctorLaws {
 
 import arrow.test.FunctorLaws.test
 
-ForOption extensions { 
+Option.functor.run {
   test { it.some() }
 }
 ```
@@ -191,8 +194,8 @@ class UserFetcher<F>(ME: MonadError<F, Throwable>, val api: ApiService): MonadEr
 
   fun getUserFriends(fid: Kind<F, UserId>): Kind<F, List<User>> =
     bindingCatch {
-      val id = fid.bind()
-      val user = api.getUser(id).bind()
+      val (id) = fid
+      val (user) = api.getUser(id)
       user.friendIds.map { api.getUser(it.id) }.bind()
     }.handleError { listOf() }
 
@@ -381,8 +384,8 @@ class UserFetcher<F>(ME: MonadError<F, Throwable>, val api: ApiService): MonadEr
 
   fun getUserFriends(fid: Kind<F, UserId>): Kind<F, List<User>> =
     bindingCatch {
-      val id = fid.bind()
-      val user = api.getUser(id).bind()
+      val (id) = fid
+      val (user) = api.getUser(id)
       user.friendIds.map { api.getUser(it.id) }.bind()
     }.handleError { listOf() }
 
@@ -413,8 +416,8 @@ We can move the functions to an object scope, and make them depend on `FetcherDe
 object Api {
   fun FetcherDependencies.getUserFriends(fid: Kind<F, UserId>): Kind<F, List<User>> =
     bindingCatch {
-      val id = fid.bind()
-      val user = api().getUser(id).bind()
+      val (id) = fid
+      val (user) = api().getUser(id)
       user.friendIds.map { api().getUser(it.id) }.bind()
     }.handleError { listOf() }
 

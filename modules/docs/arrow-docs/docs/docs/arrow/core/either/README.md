@@ -324,7 +324,7 @@ null.rightIfNotNull { "left" }
  Transforming the inner contents
 
 ```kotlin:ank
-import arrow.instances.either.functor.*
+import arrow.core.extensions.either.functor.*
 
 Right(1).map {it + 1}
 ```
@@ -334,7 +334,7 @@ Right(1).map {it + 1}
  Computing over independent values
 
 ```kotlin:ank
-import arrow.instances.either.applicative.*
+import arrow.core.extensions.either.applicative.*
 
 tupled(Either.Right(1), Either.Right("a"), Either.Right(2.0))
 ```
@@ -344,12 +344,12 @@ tupled(Either.Right(1), Either.Right("a"), Either.Right(2.0))
  Computing over dependent values ignoring absence
 
 ```kotlin
-import arrow.instances.either.monad.*
+import arrow.core.extensions.either.monad.*
 
 binding {
-  val a = Either.Right(1).bind()
-  val b = Either.Right(1 + a).bind()
-  val c = Either.Right(1 + b).bind()
+  val (a) = Either.Right(1)
+  val (b) = Either.Right(1 + a)
+  val (c) = Either.Right(1 + b)
   a + b + c
 }
 // Right(6)

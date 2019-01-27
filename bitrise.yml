@@ -12,37 +12,52 @@ trigger_map:
 workflows:
   build:
     envs:
-    - _JAVA_OPTIONS: "-Xms512m -Xmx4g"
+    - _JAVA_OPTIONS: -Xms512m -Xmx3584m
     steps:
     - script:
-        title: Build docs
+        title: dokka
         inputs:
         - content: |-
             #!/usr/bin/env bash
             set -ex
-            ./gradlew dokka :arrow-docs:runAnk
+            ./gradlew dokka
+    - script:
+        title: runAnk
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -ex
+            ./gradlew :arrow-docs:runAnk
   deploy:
     envs:
-    - _JAVA_OPTIONS: "-Xms512m -Xmx4g"
+    - _JAVA_OPTIONS: -Xms512m -Xmx3584m
     steps:
     - script:
-        title: Build docs
+        title: dokka
         inputs:
         - content: |-
             #!/usr/bin/env bash
             set -ex
-            ./gradlew dokka :arrow-docs:runAnk
+            ./gradlew dokka
+    - script:
+        title: runAnk
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -ex
+            ./gradlew :arrow-docs:runAnk
     - script:
            deps:
              apt_get:
              - name: awscli
                bin_name: aws
-           title: Deploy docs
+           title: deploy
            inputs:
            - content: |-
                #!/usr/bin/env bash
                set -ex
                bundle install --gemfile modules/docs/arrow-docs/Gemfile --path vendor/bundle
                export BUNDLE_GEMFILE=modules/docs/arrow-docs/Gemfile
+               export JEKYLL_ENV=production
                bundle exec jekyll build -s modules/docs/arrow-docs/build/site -d modules/docs/arrow-docs/build/_site
                aws s3 sync modules/docs/arrow-docs/build/_site s3://$S3_BUCKET > aws_sync_jekyll.log
