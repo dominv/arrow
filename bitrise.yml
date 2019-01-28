@@ -57,7 +57,6 @@ workflows:
            apt install python-pip
            pip install awscli
            /usr/local/bin/aws --version
-
            bundle install --gemfile modules/docs/arrow-docs/Gemfile --path vendor/bundle
            export BUNDLE_GEMFILE=modules/docs/arrow-docs/Gemfile
            export JEKYLL_ENV=production
