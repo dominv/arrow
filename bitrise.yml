@@ -54,7 +54,6 @@ workflows:
            set -ex
            aws --version
            apt remove -y awscli
-           apt install python-pip
            pip install awscli
            /usr/local/bin/aws --version
            bundle install --gemfile modules/docs/arrow-docs/Gemfile --path vendor/bundle
