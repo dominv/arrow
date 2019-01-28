@@ -52,7 +52,11 @@ workflows:
         - content: |-
            #!/usr/bin/env bash
            set -ex
-           pip install awscli --upgrade --user
+           aws --version
+           apt remove awscli
+           apt install python-pip
+           pip install awscli version:
+           /usr/local/bin/aws --version
            aws --version
            bundle install --gemfile modules/docs/arrow-docs/Gemfile --path vendor/bundle
            export BUNDLE_GEMFILE=modules/docs/arrow-docs/Gemfile
