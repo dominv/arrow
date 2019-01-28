@@ -53,7 +53,7 @@ workflows:
            #!/usr/bin/env bash
            set -ex
            aws --version
-           apt remove awscli
+           apt remove -y awscli
            apt install python-pip
            pip install awscli version:
            /usr/local/bin/aws --version
