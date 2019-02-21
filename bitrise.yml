@@ -3,7 +3,7 @@ format_version: '6'
 default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: other
 trigger_map:
-- push_branch: master
+- push_branch: arrow-docs-0.9.0
   workflow: deploy
 - push_branch: "*"
   workflow: build
