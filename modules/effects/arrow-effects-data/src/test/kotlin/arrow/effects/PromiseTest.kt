@@ -12,7 +12,7 @@ import arrow.effects.extensions.io.functor.tupleLeft
 import arrow.effects.extensions.io.monad.flatMap
 import arrow.effects.extensions.io.monadDefer.monadDefer
 import arrow.test.UnitSpec
-import arrow.test.generators.genThrowable
+import arrow.test.generators.throwable
 import io.kotlintest.runner.junit4.KotlinTestRunner
 import io.kotlintest.properties.Gen
 import io.kotlintest.properties.forAll
@@ -77,7 +77,7 @@ class PromiseTest : UnitSpec() {
       }
 
       "$label - error" {
-        forAll(genThrowable()) { error ->
+        forAll(Gen.throwable()) { error ->
           promise.flatMap { p ->
             p.error(error).flatMap {
               p.get().attempt()
@@ -87,7 +87,7 @@ class PromiseTest : UnitSpec() {
       }
 
       "$label - error twice should result in Promise.AlreadyFulfilled" {
-        forAll(genThrowable()) { error ->
+        forAll(Gen.throwable()) { error ->
           promise.flatMap { p ->
             p.error(error).flatMap {
               p.error(RuntimeException("Boom!")).attempt()
@@ -98,7 +98,7 @@ class PromiseTest : UnitSpec() {
       }
 
       "$label - tryError" {
-        forAll(genThrowable()) { error ->
+        forAll(Gen.throwable()) { error ->
           promise.flatMap { p ->
             p.tryError(error).flatMap { didError ->
               p.get().attempt()
@@ -109,7 +109,7 @@ class PromiseTest : UnitSpec() {
       }
 
       "$label - tryError twice returns false" {
-        forAll(genThrowable()) { error ->
+        forAll(Gen.throwable()) { error ->
           promise.flatMap { p ->
             p.tryError(error).flatMap {
               p.tryError(RuntimeException("Boom!")).flatMap { didComplete ->
@@ -125,8 +125,8 @@ class PromiseTest : UnitSpec() {
         Ref.of(0, IO.monadDefer()).flatMap { state ->
           promise.flatMap { modifyGate ->
             promise.flatMap { readGate ->
-              modifyGate.get().flatMap { state.update { i -> i * 2 }.flatMap { readGate.complete(0) } }.startF(ctx).flatMap {
-                state.set(1).flatMap { modifyGate.complete(0) }.startF(ctx).flatMap {
+              modifyGate.get().flatMap { state.update { i -> i * 2 }.flatMap { readGate.complete(0) } }.startFiber(ctx).flatMap {
+                state.set(1).flatMap { modifyGate.complete(0) }.startFiber(ctx).flatMap {
                   readGate.get().flatMap {
                     state.get()
                   }
