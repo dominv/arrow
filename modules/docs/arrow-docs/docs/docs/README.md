@@ -82,29 +82,30 @@ apply plugin: 'kotlin-kapt'
 def arrow_version = "0.9.0-SNAPSHOT"
 dependencies {
     compile "io.arrow-kt:arrow-core-data:$arrow_version"
+    compile "io.arrow-kt:arrow-core-extensions:$arrow_version"
     compile "io.arrow-kt:arrow-syntax:$arrow_version"
     compile "io.arrow-kt:arrow-typeclasses:$arrow_version"
-    compile "io.arrow-kt:arrow-extras:$arrow_version"
-    compile "io.arrow-kt:arrow-core-extensions:$arrow_version"
+    compile "io.arrow-kt:arrow-extras-data:$arrow_version"
     compile "io.arrow-kt:arrow-extras-extensions:$arrow_version"
     kapt    "io.arrow-kt:arrow-meta:$arrow_version"
 
-    compile "io.arrow-kt:arrow-free:$arrow_version" //optional
+    compile "io.arrow-kt:arrow-free-data:$arrow_version" //optional
     compile "io.arrow-kt:arrow-free-extensions:$arrow_version" //optional
     compile "io.arrow-kt:arrow-mtl:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects:$arrow_version" //optional
+    compile "io.arrow-kt:arrow-effects-data:$arrow_version" //optional
     compile "io.arrow-kt:arrow-effects-extensions:$arrow_version" //optional
     compile "io.arrow-kt:arrow-effects-io-extensions:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects-rx2:$arrow_version" //optional
+    compile "io.arrow-kt:arrow-effects-rx2-data:$arrow_version" //optional
     compile "io.arrow-kt:arrow-effects-rx2-extensions:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects-reactor:$arrow_version" //optional
+    compile "io.arrow-kt:arrow-effects-reactor-data:$arrow_version" //optional
     compile "io.arrow-kt:arrow-effects-reactor-extensions:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects-kotlinx-coroutines:$arrow_version" //optional
+    compile "io.arrow-kt:arrow-effects-kotlinx-coroutines-data:$arrow_version" //optional
     compile "io.arrow-kt:arrow-effects-kotlinx-coroutines-extensions:$arrow_version" //optional
     compile "io.arrow-kt:arrow-optics:$arrow_version" //optional
     compile "io.arrow-kt:arrow-generic:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-recursion:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-extensions-recursion:$arrow_version" //optional
+    compile "io.arrow-kt:arrow-recursion-data:$arrow_version" //optional
+    compile "io.arrow-kt:arrow-recursion-extensions:$arrow_version" //optional
+    compile "io.arrow-kt:arrow-query-language:$arrow_version" //optional
     compile "io.arrow-kt:arrow-integration-retrofit-adapter:$arrow_version" //optional
 }
 ```
@@ -169,7 +170,7 @@ Add the dependencies that you want to use
 ```
 <dependency>
     <groupId>io.arrow-kt</groupId>
-    <artifactId>arrow-core</artifactId>
+    <artifactId>arrow-core-extensions</artifactId>
     <version>${arrow.version}</version>
 </dependency>
 <dependency>
@@ -184,17 +185,7 @@ Add the dependencies that you want to use
 </dependency>
 <dependency>
     <groupId>io.arrow-kt</groupId>
-    <artifactId>arrow-data</artifactId>
-    <version>${arrow.version}</version>
-</dependency>
-<dependency>
-    <groupId>io.arrow-kt</groupId>
-    <artifactId>arrow-extensions-core</artifactId>
-    <version>${arrow.version}</version>
-</dependency>
-<dependency>
-    <groupId>io.arrow-kt</groupId>
-    <artifactId>arrow-extensions-data</artifactId>
+    <artifactId>arrow-extras-extensions</artifactId>
     <version>${arrow.version}</version>
 </dependency>
 ```
@@ -220,7 +211,7 @@ Enable annotaton processing using kotlin plugin
                 <annotationProcessorPaths>
                     <annotationProcessorPath>
                         <groupId>io.arrow-kt</groupId>
-                        <artifactId>arrow-annotations-processor</artifactId>
+                        <artifactId>arrow-meta</artifactId>
                         <version>${arrow.version}</version>
                     </annotationProcessorPath>
                 </annotationProcessorPaths>
