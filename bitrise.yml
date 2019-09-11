@@ -61,7 +61,7 @@ workflows:
             if [[ BUNDLE_CHECK_RESULT -eq 0 ]]; then
                 echo "All fine, all good with bundler"
             else
-                echo "Updating bundler"
+                echo "Updating bundler..."
                 gem uninstall bundler --force
                 gem install bundler --force
                 echo "$( gem list | grep bundler )"
