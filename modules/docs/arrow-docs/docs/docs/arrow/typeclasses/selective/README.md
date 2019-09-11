@@ -24,7 +24,7 @@ Select applies an effectful computation wrapped in a `Kind<F, (A) -> B>` that wi
 ```kotlin:ank
 import arrow.core.*
 import arrow.core.extensions.*
-import arrow.effects.*
+import arrow.fx.*
 
 Some<Either<Int, String>>(Left(1))
   .select(Some({ a: Int -> a.toString() }))
@@ -83,7 +83,7 @@ TypeClass(Selective::class).dtMarkdownList()
 <canvas id="hierarchy-diagram" style="margin-top:120px"></canvas>
 
 <script>
-  drawNomNomlDiagram('hierarchy-diagram', 'monad.nomnol')
+  drawNomNomlDiagram('hierarchy-diagram', 'selective.nomnol')
 </script>
 
 ```kotlin:ank:outFile(selective.nomnol)

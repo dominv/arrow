@@ -4,10 +4,11 @@ title: Quick Start
 permalink: /docs/
 ---
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.arrow-kt/arrow-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.arrow-kt/arrow-core)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.arrow-kt/arrow-core-data/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.arrow-kt/arrow-core)
 [![Build Status](https://travis-ci.org/arrow-kt/arrow.svg?branch=master)](https://travis-ci.org/arrow-kt/arrow/)
 [![Kotlin version badge](https://img.shields.io/badge/kotlin-1.3-blue.svg)](https://kotlinlang.org/docs/reference/whatsnew13.html)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![StackOverflow](https://img.shields.io/badge/arrow--kt-black.svg?logo=stackoverflow)]( http://stackoverflow.com/questions/tagged/arrow-kt)
 
 Λrrow is a library for Typed Functional Programming in Kotlin.
 
@@ -33,83 +34,69 @@ Use the list below to learn more about Λrrow's main features.
 
 Make sure to have the latest version of JDK 1.8 installed.
 
-In your project's root `build.gradle` append the jcenter repository to your list of repositories.
+In your project's root `build.gradle` append these repositories to your list.
 
 ```groovy
 allprojects {
     repositories {
         mavenCentral()
         jcenter()
-        maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" }
-        maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+        maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" } 
+        maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local/' } // for SNAPSHOT builds
     }
 }
 ```
 
-# Dependency breakdown starting in Arrow 0.9.1
-
-Starting in 0.9.1, Arrow follows the following convention for artifact publication.
-
-The arrow modules are Core, Effects, Optics, Recursion, etc.
-
-An Arrow module is composed of data types and type classes.
-Arrow modules are exported and published with the following semantics.
-
-If we take for example `arrow-core`.
-
-Arrow core contains the basic arrow type classes and data types and it's composed of 3 main artifacts that may be used a la carte:
-
-Recomended for most use cases:
-
-- `arrow-core` (Depends on data and extensions modules and exports both)
-
-Trimmed down versions:
-
-- `arrow-core-data` (Only data types)
-- `arrow-core-extensions` (Only type class extensions)
-
-# Current stable version 0.9.0
-
-```groovy
-def arrow_version = "0.9.0"
-```
-
-You can find the dependencies necessary in the Basic Setup of the README at the 0.9.0 tag clicking [here](https://github.com/arrow-kt/arrow/blob/0.9.0/README.md#next-development-version-090).
-
-# Next development version 0.9.1
+# Next development version 0.10.1
 
 Add the dependencies into the project's `build.gradle`
 
-```groovy
-def arrow_version = "0.9.1-SNAPSHOT"
-dependencies {
-    compile "io.arrow-kt:arrow-core-data:$arrow_version"
-    compile "io.arrow-kt:arrow-core-extensions:$arrow_version"
-    compile "io.arrow-kt:arrow-syntax:$arrow_version"
-    compile "io.arrow-kt:arrow-typeclasses:$arrow_version"
-    compile "io.arrow-kt:arrow-extras-data:$arrow_version"
-    compile "io.arrow-kt:arrow-extras-extensions:$arrow_version"
-    kapt    "io.arrow-kt:arrow-meta:$arrow_version"
+## Λrrow Core
 
-    compile "io.arrow-kt:arrow-query-language:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-free-data:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-free-extensions:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-mtl:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects-data:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects-extensions:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects-io-extensions:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects-rx2-data:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects-rx2-extensions:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects-reactor-data:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-effects-reactor-extensions:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-optics:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-generic:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-recursion-data:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-recursion-extensions:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-query-language:$arrow_version" //optional
-    compile "io.arrow-kt:arrow-integration-retrofit-adapter:$arrow_version" //optional
+```groovy
+def arrow_version = "0.10.1-SNAPSHOT"
+dependencies {
+    compile "io.arrow-kt:arrow-core:$arrow_version"
+    compile "io.arrow-kt:arrow-syntax:$arrow_version"
+    kapt    "io.arrow-kt:arrow-meta:$arrow_version"
 }
 ```
+
+## Λrrow Core + Λrrow Optics
+
+```groovy
+def arrow_version = "0.10.1-SNAPSHOT"
+dependencies {
+    compile "io.arrow-kt:arrow-optics:$arrow_version"
+    compile "io.arrow-kt:arrow-syntax:$arrow_version"
+    kapt    "io.arrow-kt:arrow-meta:$arrow_version"
+}
+```
+
+## Λrrow Core + Λrrow Fx 
+
+```groovy
+def arrow_version = "0.10.1-SNAPSHOT"
+dependencies {
+    compile "io.arrow-kt:arrow-fx:$arrow_version"
+    compile "io.arrow-kt:arrow-syntax:$arrow_version"
+    kapt    "io.arrow-kt:arrow-meta:$arrow_version"
+}
+```
+
+## Λrrow Core + Λrrow Optics + Λrrow Fx
+
+```groovy
+def arrow_version = "0.10.1-SNAPSHOT"
+dependencies {
+    compile "io.arrow-kt:arrow-fx:$arrow_version"
+    compile "io.arrow-kt:arrow-optics:$arrow_version"
+    compile "io.arrow-kt:arrow-syntax:$arrow_version"
+    kapt    "io.arrow-kt:arrow-meta:$arrow_version"
+}
+```
+
+Here is the complete [library list]({{ '/docs/quickstart/libraries/' | relative_url }}) for a more granular dependency set-up.
 
 # Additional Setup
 
@@ -122,7 +109,7 @@ Add the dependencies into the project's `build.gradle`
 apply plugin: 'kotlin-kapt' //optional
 apply from: rootProject.file('gradle/generated-kotlin-sources.gradle') //only for Android projects
 
-def arrow_version = "0.9.0"
+def arrow_version = "0.10.1-SNAPSHOT"
 dependencies {
     ...
     kapt    'io.arrow-kt:arrow-meta:$arrow_version' //optional
@@ -155,6 +142,10 @@ idea {
     }
 }
 ```
+## Linting
+
+Some linters might complaint about some code practices that are common when working with functional programming. You can read more about how to solve this problem in the [Linting](http://arrow-kt.io/docs/quickstart/linting/) section.
+
 # Maven 
 ## Basic Setup
 
@@ -163,32 +154,23 @@ Add to your pom.xml file the following properties:
 ```
 <properties>
     <kotlin.version>1.3.0</kotlin.version>
-    <arrow.version>0.8.2</arrow.version>
+     <arrow.version>0.9.0</arrow.version>
 </properties>
 ```
 
 Add the dependencies that you want to use
 ```
-<dependency>
-    <groupId>io.arrow-kt</groupId>
-    <artifactId>arrow-core-extensions</artifactId>
-    <version>${arrow.version}</version>
-</dependency>
-<dependency>
-    <groupId>io.arrow-kt</groupId>
-    <artifactId>arrow-syntax</artifactId>
-    <version>${arrow.version}</version>
-</dependency>
-<dependency>
-    <groupId>io.arrow-kt</groupId>
-    <artifactId>arrow-typeclasses</artifactId>
-    <version>${arrow.version}</version>
-</dependency>
-<dependency>
-    <groupId>io.arrow-kt</groupId>
-    <artifactId>arrow-extras-extensions</artifactId>
-    <version>${arrow.version}</version>
-</dependency>
+        <dependency>
+            <groupId>io.arrow-kt</groupId>
+            <artifactId>arrow-core</artifactId>
+            <version>${arrow.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.arrow-kt</groupId>
+            <artifactId>arrow-syntax</artifactId>
+            <version>${arrow.version}</version>
+        </dependency>
+
 ```
 
 ## Enabling kapt

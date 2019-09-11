@@ -336,7 +336,7 @@ Right(1).map {it + 1}
  Computing over independent values
 
 ```kotlin:ank
-import arrow.core.extensions.either.applicative.*
+import arrow.core.extensions.either.apply.*
 
 tupled(Either.Right(1), Either.Right("a"), Either.Right(2.0))
 ```
@@ -346,9 +346,9 @@ tupled(Either.Right(1), Either.Right("a"), Either.Right(2.0))
  Computing over dependent values ignoring absence
 
 ```kotlin
-import arrow.core.extensions.either.monad.*
+import arrow.core.extensions.fx
 
-binding {
+Either.fx {
   val (a) = Either.Right(1)
   val (b) = Either.Right(1 + a)
   val (c) = Either.Right(1 + b)
@@ -361,7 +361,6 @@ binding {
 
 ```kotlin:ank:replace
 import arrow.reflect.*
-import arrow.data.*
 import arrow.core.*
 
 DataType(Either::class).tcMarkdownList()

@@ -67,6 +67,11 @@ sealed class Either<out A, out B> : EitherOf<A, B> {
       }
     }
 
+  fun <C> bifoldLeft(c: C, f: (C, A) -> C, g: (C, B) -> C): C = fold({ f(c, it) }, { g(c, it) })
+
+  fun <C> bifoldRight(c: Eval<C>, f: (A, Eval<C>) -> Eval<C>, g: (B, Eval<C>) -> Eval<C>): Eval<C> =
+    fold({ f(it, c) }, { g(it, c) })
+
   /**
    * If this is a `Left`, then return the left value in `Right` or vice versa.
    *
@@ -88,7 +93,7 @@ sealed class Either<out A, out B> : EitherOf<A, B> {
    * ```
    */
   @Suppress("UNCHECKED_CAST")
-  inline fun <C> map(f: (B) -> C): Either<A, C> =
+  fun <C> map(f: (B) -> C): Either<A, C> =
     flatMap { Right(f(it)) }
 
   /**
@@ -100,13 +105,13 @@ sealed class Either<out A, out B> : EitherOf<A, B> {
    * Left(12).mapLeft { "flower" }  // Result: Left("flower)
    * ```
    */
-  inline fun <C> mapLeft(f: (A) -> C): Either<C, B> =
+  fun <C> mapLeft(f: (A) -> C): Either<C, B> =
     fold({ Left(f(it)) }, { Right(it) })
 
   /**
    * Map over Left and Right of this Either
    */
-  inline fun <C, D> bimap(leftOperation: (A) -> C, rightOperation: (B) -> D): Either<C, D> =
+  fun <C, D> bimap(leftOperation: (A) -> C, rightOperation: (B) -> D): Either<C, D> =
     fold({ Left(leftOperation(it)) }, { Right(rightOperation(it)) })
 
   /**
@@ -190,6 +195,15 @@ sealed class Either<out A, out B> : EitherOf<A, B> {
 
     fun <L, R> cond(test: Boolean, ifTrue: () -> R, ifFalse: () -> L): Either<L, R> = if (test) right(ifTrue()) else left(ifFalse())
 
+    suspend fun <R> catch(f: suspend () -> R): Either<Throwable, R> =
+      catch(::identity, f)
+
+    suspend fun <L, R> catch(fe: (Throwable) -> L, f: suspend () -> R): Either<L, R> =
+      try {
+        f().right()
+      } catch (t: Throwable) {
+        fe(t.nonFatalOrThrow()).left()
+      }
   }
 }
 
@@ -202,7 +216,7 @@ fun <R> Right(right: R): Either<Nothing, R> = Either.right(right)
  *
  * @param f The function to bind across [Either.Right].
  */
-inline fun <A, B, C> EitherOf<A, B>.flatMap(f: (B) -> Either<A, C>): Either<A, C> =
+fun <A, B, C> EitherOf<A, B>.flatMap(f: (B) -> Either<A, C>): Either<A, C> =
   fix().let {
     when (it) {
       is Right -> f(it.b)
@@ -219,7 +233,7 @@ inline fun <A, B, C> EitherOf<A, B>.flatMap(f: (B) -> Either<A, C>): Either<A, C
  * Left(12).getOrElse(17)  // Result: 17
  * ```
  */
-inline fun <B> EitherOf<*, B>.getOrElse(default: () -> B): B =
+fun <B> EitherOf<*, B>.getOrElse(default: () -> B): B =
   fix().fold({ default() }, ::identity)
 
 /**
@@ -244,7 +258,7 @@ fun <B> EitherOf<*, B>.orNull(): B? =
  * Left(12).getOrHandle { it + 5 } // Result: 17
  * ```
  */
-inline fun <A, B> EitherOf<A, B>.getOrHandle(default: (A) -> B): B =
+fun <A, B> EitherOf<A, B>.getOrHandle(default: (A) -> B): B =
   fix().fold({ default(it) }, ::identity)
 
 /**
@@ -265,7 +279,7 @@ inline fun <A, B> EitherOf<A, B>.getOrHandle(default: (A) -> B): B =
  * left.filterOrElse({ it > 10 }, { -1 })      // Result: Left(12)
  * ```
  */
-inline fun <A, B> EitherOf<A, B>.filterOrElse(predicate: (B) -> Boolean, default: () -> A): Either<A, B> =
+fun <A, B> EitherOf<A, B>.filterOrElse(predicate: (B) -> Boolean, default: () -> A): Either<A, B> =
   flatMap { if (predicate(it)) Right(it) else Left(default()) }
 
 /**
@@ -298,7 +312,7 @@ inline fun <A, B> EitherOf<A, B>.filterOrElse(predicate: (B) -> Boolean, default
  * left.filterOrOther({ it > 10 }, { -1 })
  * ```
  */
-inline fun <A, B> EitherOf<A, B>.filterOrOther(predicate: (B) -> Boolean, default: (B) -> A): Either<A, B> =
+fun <A, B> EitherOf<A, B>.filterOrOther(predicate: (B) -> Boolean, default: (B) -> A): Either<A, B> =
   flatMap {
     if (predicate(it)) arrow.core.Either.Right(it)
     else arrow.core.Either.Left(default(it))
@@ -320,7 +334,7 @@ inline fun <A, B> EitherOf<A, B>.filterOrOther(predicate: (B) -> Boolean, defaul
  * Left(12).leftIfNull({ -1 })    // Result: Left(12)
  * ```
  */
-inline fun <A, B> EitherOf<A, B?>.leftIfNull(crossinline default: () -> A): Either<A, B> =
+fun <A, B> EitherOf<A, B?>.leftIfNull(default: () -> A): Either<A, B> =
   fix().flatMap { it.rightIfNotNull { default() } }
 
 /**

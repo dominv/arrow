@@ -1,6 +1,6 @@
 package arrow.optics
 
-import arrow.data.NonEmptyList
+import arrow.core.NonEmptyList
 import arrow.core.extensions.monoid
 import arrow.test.UnitSpec
 import arrow.test.generators.functionAToB
@@ -41,7 +41,5 @@ class NonEmptyListTest : UnitSpec() {
         override fun List<String>.combine(b: List<String>): List<String> = this + b
       }
     ))
-
   }
-
 }

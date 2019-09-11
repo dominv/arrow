@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
+import com.github.benmanes.gradle.versions.reporter.PlainTextReporter
+
 buildscript {
     ext {
         // Constants
-        gradleVersion = '4.10'
-        gradleVersionsPluginVersion = '0.20.0'
-        javaVersion = JavaVersion.VERSION_1_7
+        ankKotlinVersion = '1.3.11'
+        dokka_version = '0.9.18'
+        ktlint_version = '7.3.0'
+        gradleVersionsPluginVersion = '0.21.0'
         jUnitVersion = '4.12'
-        jUnitVintageVersion = '5.2.0'
-        kotlinTestVersion = '3.1.5'
-        kotlinVersion = '1.3.11'
-        daggerVersion = '2.17'
-        kotlinxCoroutinesVersion = '1.1.0'
+        jUnitVintageVersion = '5.4.0'
+        javaVersion = JavaVersion.VERSION_1_7
+        kotlinPoetVersion = '1.1.0'
+        kotlinTestVersion = '3.3.1'
+        kotlinVersion = '1.3.21'
         kotlinxCollectionsImmutableVersion = '0.1'
-        kotlinPoetVersion = '1.0.0-RC1'
-        projectReactorVersion = '3.1.8.RELEASE'
-        rxJavaVersion = '2.2.1'
-        dokka_version = '0.9.17'
-        detekt_version = '1.0.0-RC12'
+        kotlinxCoroutinesVersion = '1.1.1'
+        projectReactorVersion = '3.2.6.RELEASE'
+        retrofitVersion = '2.5.0'
+        rxJavaVersion = '2.2.7'
     }
 
     repositories {
@@ -49,10 +51,12 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
         classpath 'io.arrow-kt:ank-gradle-plugin:0.7.1'
-        classpath 'org.ajoberstar:gradle-git-publish:1.0.1'
+        classpath 'org.ajoberstar:gradle-git-publish:2.0.0'
         classpath "net.rdrei.android.buildtimetracker:gradle-plugin:0.11.1"
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
+        classpath "me.champeau.gradle:jmh-gradle-plugin:0.4.7"
+        classpath "gradle.plugin.io.morethan.jmhreport:gradle-jmh-report:0.9.0"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlint_version"
     }
 }
 
@@ -81,15 +85,10 @@ subprojects { project ->
     version = VERSION_NAME
 
     apply plugin: 'kotlin'
-    apply plugin: 'jacoco'
     apply plugin: 'org.jetbrains.dokka'
-    apply plugin: 'io.gitlab.arturbosch.detekt'
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
 
     archivesBaseName = POM_ARTIFACT_ID
-
-    jacoco {
-        toolVersion '0.8.2'
-    }
 
     //dokka log spam `Can't find node by signature` comes from https://github.com/Kotlin/dokka/issues/269
     dokka {
@@ -113,29 +112,6 @@ subprojects { project ->
             suffix = "#L"
         }
 
-    }
-
-    detekt {
-        toolVersion = detekt_version
-        input = files("src/main/java", "src/main/kotlin", "src/test/kotlin")
-        parallel = true
-        config = files("${rootProject.projectDir}/detekt.yml")
-    }
-
-    task codeCoverageReport(type: JacocoReport) {
-        reports {
-            xml.enabled true
-            xml.destination file("${buildDir}/reports/jacoco/report.xml")
-            html.enabled true
-            csv.enabled false
-        }
-
-        classDirectories = fileTree(
-                dir: 'build/classes/kotlin/main',
-        )
-
-        sourceDirectories = files('src/main/kotlin')
-        executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
     }
 
     apply plugin: 'com.jfrog.bintray'
@@ -212,6 +188,11 @@ tasks.create('repl') {
     }
 }
 
+tasks.wrapper {
+    gradleVersion = "5.0"
+    distributionType = Wrapper.DistributionType.ALL
+}
+
 apply plugin: 'com.github.ben-manes.versions'
 
 configurations.all {
@@ -234,6 +215,9 @@ dependencyUpdates {
             .plus(result.exceeded.dependencies)
             .plus(result.unresolved.dependencies)
             .findAll { dependency -> dependenciesToCheck.any { it == "${dependency.group}:${dependency.name}" } }
+
+        def plainTextReporter = new PlainTextReporter(project, revision, gradleReleaseChannel)
+        plainTextReporter.write(System.out, result)
 
         final isRejected = dependencies
                 .any { dependency -> disallowedQualifiers.any(isDisallowed(dependency)) }

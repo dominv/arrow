@@ -2,8 +2,8 @@ package arrow.optics.instances
 
 import arrow.core.Either
 import arrow.core.Option
-import arrow.data.ListK
-import arrow.data.extensions.listk.eq.eq
+import arrow.core.ListK
+import arrow.core.extensions.listk.eq.eq
 import arrow.core.extensions.option.eq.eq
 import arrow.optics.extensions.either.each.each
 import arrow.test.UnitSpec
@@ -29,6 +29,5 @@ class EitherInstanceTest : UnitSpec() {
       EQOptionB = Option.eq(Eq.any()),
       EQListB = ListK.eq(Eq.any())
     ))
-
   }
 }

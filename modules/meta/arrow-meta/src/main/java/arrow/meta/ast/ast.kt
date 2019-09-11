@@ -18,19 +18,22 @@ data class Code(val value: String) {
 }
 
 data class PackageName(
-  val value: String) : Tree() {
+  val value: String
+) : Tree() {
   companion object
 }
 
 data class TypeAlias(
   val name: String,
-  val value: TypeName) : Tree() {
+  val value: TypeName
+) : Tree() {
   companion object
 }
 
 data class Import(
   val qualifiedName: String,
-  val alias: String? = null) : Tree() {
+  val alias: String? = null
+) : Tree() {
   companion object
 }
 
@@ -61,7 +64,8 @@ sealed class TypeName : Tree() {
     val upperBounds: List<TypeName>,
     val lowerBounds: List<TypeName>,
     val nullable: Boolean,
-    val annotations: List<Annotation>) : TypeName() {
+    val annotations: List<Annotation>
+  ) : TypeName() {
 
     override val simpleName: String
       get() = name
@@ -133,6 +137,7 @@ sealed class TypeName : Tree() {
 
   companion object {
     val Unit: TypeName = TypeName.Classy(simpleName = "Unit", pckg = PackageName("kotlin"), fqName = "kotlin.Unit")
+    val AnyNullable: TypeName = TypeName.TypeVariable("Any?")
   }
 }
 
@@ -161,22 +166,23 @@ data class Parameter(
 data class Annotation(
   val type: TypeName,
   val members: List<Code>,
-  val useSiteTarget: UseSiteTarget?) : Tree() {
+  val useSiteTarget: UseSiteTarget?
+) : Tree() {
   companion object
 }
 
 data class Property(
   val name: String,
   val type: TypeName,
-  val mutable: Boolean,
+  val mutable: Boolean = false,
   val kdoc: Code? = null,
   val initializer: Code? = null,
   val delegated: Boolean = false,
-  val getter: Func,
-  val setter: Func?,
+  val getter: Func? = null,
+  val setter: Func? = null,
   val receiverType: TypeName? = null,
-  val jvmPropertySignature: String,
-  val jvmFieldSignature: String?,
+  val jvmPropertySignature: String? = null,
+  val jvmFieldSignature: String? = null,
   val annotations: List<Annotation> = emptyList(),
   val modifiers: List<Modifier> = emptyList()) : Tree() {
   companion object
@@ -192,7 +198,8 @@ data class Func(
   val modifiers: List<Modifier> = emptyList(),
   val typeVariables: List<TypeName.TypeVariable> = emptyList(),
   val parameters: List<Parameter> = emptyList(),
-  val jvmMethodSignature: String = "") : Tree() {
+  val jvmMethodSignature: String = ""
+) : Tree() {
   companion object
 }
 
@@ -257,5 +264,4 @@ data class Type(
   }
 
   companion object
-
 }

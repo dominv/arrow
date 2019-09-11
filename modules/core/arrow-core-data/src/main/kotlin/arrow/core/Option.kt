@@ -1,5 +1,6 @@
 package arrow.core
 
+import arrow.Kind
 import arrow.higherkind
 
 /**
@@ -47,7 +48,6 @@ sealed class Option<out A> : OptionOf<A> {
     operator fun <A> invoke(a: A): Option<A> = Some(a)
 
     fun <A> empty(): Option<A> = None
-
   }
 
   /**
@@ -79,16 +79,31 @@ sealed class Option<out A> : OptionOf<A> {
    * @param f the function to apply
    * @see flatMap
    */
-  inline fun <B> map(f: (A) -> B): Option<B> =
+  fun <B> map(f: (A) -> B): Option<B> =
     flatMap { a -> Some(f(a)) }
 
-  fun <B> mapFilter(f: (A) -> Option<B>): Option<B> =
+  fun <B, R> map2(fb: Kind<ForOption, B>, f: (Tuple2<A, B>) -> R): Option<R> =
+    flatMap { a: A -> fb.fix().map { b -> f(a toT b) } }
+
+  fun <B> filterMap(f: (A) -> Option<B>): Option<B> =
     flatMap { a -> f(a).fold({ empty<B>() }, { just(it) }) }
 
   inline fun <R> fold(ifEmpty: () -> R, ifSome: (A) -> R): R = when (this) {
     is None -> ifEmpty()
     is Some<A> -> ifSome(t)
   }
+
+  /**
+   * Returns $none if the result of applying $f to this $option's value is null.
+   * Otherwise returns the result.
+   *
+   * @note This is similar to `.flatMap { Option.fromNullable(null)) }`
+   * and primarily for convenience.
+   *
+   * @param f the function to apply.
+   * */
+  fun <B> mapNotNull(f: (A) -> B?): Option<B> =
+    flatMap { a -> fromNullable(f(a)) }
 
   /**
    * Returns the result of applying $f to this $option's value if
@@ -100,7 +115,7 @@ sealed class Option<out A> : OptionOf<A> {
    * @param f the function to apply
    * @see map
    */
-  inline fun <B> flatMap(f: (A) -> OptionOf<B>): Option<B> =
+  fun <B> flatMap(f: (A) -> OptionOf<B>): Option<B> =
     when (this) {
       is None -> this
       is Some -> f(t).fix()
@@ -198,7 +213,7 @@ fun <T> Option<T>.getOrElse(default: () -> T): T = fold({ default() }, ::identit
  *
  * @param alternative the default option if this is empty.
  */
-inline fun <A> OptionOf<A>.orElse(alternative: () -> Option<A>): Option<A> = if (fix().isEmpty()) alternative() else fix()
+fun <A> OptionOf<A>.orElse(alternative: () -> Option<A>): Option<A> = if (fix().isEmpty()) alternative() else fix()
 
 infix fun <T> OptionOf<T>.or(value: Option<T>): Option<T> = if (fix().isEmpty()) {
   value
@@ -234,4 +249,4 @@ fun <T> Iterable<T>.lastOrNone(predicate: (T) -> Boolean): Option<T> = this.last
 fun <T> Iterable<T>.elementAtOrNone(index: Int): Option<T> = this.elementAtOrNull(index).toOption()
 
 fun <A, B> Option<Either<A, B>>.select(f: OptionOf<(A) -> B>): Option<B> =
-  flatMap { it.fold({ l -> Option.just(l).ap(f) }, { r -> Option.just(identity(r)) }) }
+  flatMap { it.fold({ l -> Option.just(l).ap(f) }, { r -> Option.just(r) }) }
