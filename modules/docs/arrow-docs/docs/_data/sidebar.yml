@@ -35,59 +35,104 @@ options:
 
     nested_options:
 
-      - title: Type Classes
-        url: /docs/apidocs/arrow-typeclasses/
+      - title: Ank Gradle
+        url: /docs/apidocs/arrow-ank-gradle
 
-      - title: Core Data Types
-        url: /docs/apidocs/arrow-core-data/
+      - title: Ank
+        url: /docs/apidocs/arrow-ank
 
-      - title: Effects
-        url: /docs/apidocs/arrow-effects-data/
+      - title: Annotations
+        url: /docs/apidocs/arrow-annotations
 
-      - title: Effects Extensions
-        url: /docs/apidocs/arrow-effects-extensions/
+      - title: AQL
+        url: /docs/apidocs/arrow-aql
 
-      - title: Effects Coroutines
-        url: /docs/apidocs/arrow-effects-kotlinx-coroutines-data/
+      - title: Benchmarks Effects
+        url: /docs/apidocs/arrow-benchmarks-fx
 
-      - title: Effects Coroutines Extensions
-        url: /docs/apidocs/arrow-effects-kotlinx-coroutines-extensions/
+      - title: Core Data
+        url: /docs/apidocs/arrow-core-data
 
-      - title: Effects Rx2
-        url: /docs/apidocs/arrow-effects-rx2-data/
+      - title: Core
+        url: /docs/apidocs/arrow-core
 
-      - title: Effects Rx2 Extensions
-        url: /docs/apidocs/arrow-effects-rx2-extensions/
+      - title: Docs
+        url: /docs/apidocs/arrow-docs
 
-      - title: Effects Reactor
-        url: /docs/apidocs/arrow-effects-reactor-data/
+      - title: Examples
+        url: /docs/apidocs/arrow-examples
 
-      - title: Effects Reactor Extensions
-        url: /docs/apidocs/arrow-effects-reactor-extensions/
-
-      - title: Streams
-        url: /docs/apidocs/arrow-streams/
-
-      - title: MTL
-        url: /docs/apidocs/arrow-mtl/
-
-      - title: Optics
-        url: /docs/apidocs/arrow-optics/
-
-      - title: Recursion
-        url: /docs/apidocs/arrow-recursion-data/
-
-      - title: Recursion Extensions
-        url: /docs/apidocs/arrow-recursion-extensions/
-
-      - title: Generic
-        url: /docs/apidocs/arrow-generic/
+      - title: Free Data
+        url: /docs/apidocs/arrow-free-data
 
       - title: Free
-        url: /docs/apidocs/arrow-free-data/
+        url: /docs/apidocs/arrow-free
+
+      - title: Effects MTL
+        url: /docs/apidocs/arrow-fx-mtl
+
+      - title: Effects Reactor
+        url: /docs/apidocs/arrow-fx-reactor
+
+      - title: Effects Rx2
+        url: /docs/apidocs/arrow-fx-rx2
+
+      - title: Effects
+        url: /docs/apidocs/arrow-fx
+
+      - title: Generic
+        url: /docs/apidocs/arrow-generic
+
+      - title: Integrations Retrofit Adapter
+        url: /docs/apidocs/arrow-integrations-retrofit-adapter
+
+      - title: Kindedj
+        url: /docs/apidocs/arrow-kindedj
+
+      - title: Meta Test Models
+        url: /docs/apidocs/arrow-meta-test-models
+
+      - title: Meta
+        url: /docs/apidocs/arrow-meta
+
+      - title: MTL Data
+        url: /docs/apidocs/arrow-mtl-data
+
+      - title: MTL
+        url: /docs/apidocs/arrow-mtl
+
+      - title: Optics MTL
+        url: /docs/apidocs/arrow-optics-mtl
+
+      - title: Optics
+        url: /docs/apidocs/arrow-optics
+
+      - title: Recursion Data
+        url: /docs/apidocs/arrow-recursion-data
+
+      - title: Recursion
+        url: /docs/apidocs/arrow-recursion
+
+      - title: Reflect
+        url: /docs/apidocs/arrow-reflect
+
+      - title: Streams
+        url: /docs/apidocs/arrow-streams
+
+      - title: Syntax
+        url: /docs/apidocs/arrow-syntax
+
+      - title: Test
+        url: /docs/apidocs/arrow-test
+
+      - title: UI Data
+        url: /docs/apidocs/arrow-ui-data
+
+      - title: UI
+        url: /docs/apidocs/arrow-ui
 
       - title: Validation
-        url: /docs/apidocs/arrow-validation/
+        url: /docs/apidocs/arrow-validation
 
 
   - title: Patterns
