@@ -35,11 +35,11 @@ options:
 
     nested_options:
 
-      - title: Ank Gradle
-        url: /docs/apidocs/arrow-ank-gradle
-
       - title: Ank
         url: /docs/apidocs/arrow-ank
+
+      - title: Ank Gradle
+        url: /docs/apidocs/arrow-ank-gradle
 
       - title: Annotations
         url: /docs/apidocs/arrow-annotations
@@ -50,11 +50,11 @@ options:
       - title: Benchmarks Effects
         url: /docs/apidocs/arrow-benchmarks-fx
 
-      - title: Core Data
-        url: /docs/apidocs/arrow-core-data
-
       - title: Core
         url: /docs/apidocs/arrow-core
+
+      - title: Core Extensions
+        url: /docs/apidocs/arrow-core-data
 
       - title: Docs
         url: /docs/apidocs/arrow-docs
@@ -62,11 +62,14 @@ options:
       - title: Examples
         url: /docs/apidocs/arrow-examples
 
-      - title: Free Data
-        url: /docs/apidocs/arrow-free-data
-
       - title: Free
         url: /docs/apidocs/arrow-free
+
+      - title: Free Extensions
+        url: /docs/apidocs/arrow-free-data
+
+      - title: Effects
+        url: /docs/apidocs/arrow-fx
 
       - title: Effects MTL
         url: /docs/apidocs/arrow-fx-mtl
@@ -77,9 +80,6 @@ options:
       - title: Effects Rx2
         url: /docs/apidocs/arrow-fx-rx2
 
-      - title: Effects
-        url: /docs/apidocs/arrow-fx
-
       - title: Generic
         url: /docs/apidocs/arrow-generic
 
@@ -89,29 +89,29 @@ options:
       - title: Kindedj
         url: /docs/apidocs/arrow-kindedj
 
-      - title: Meta Test Models
-        url: /docs/apidocs/arrow-meta-test-models
-
       - title: Meta
         url: /docs/apidocs/arrow-meta
 
-      - title: MTL Data
-        url: /docs/apidocs/arrow-mtl-data
+      - title: Meta Test Models
+        url: /docs/apidocs/arrow-meta-test-models
 
       - title: MTL
         url: /docs/apidocs/arrow-mtl
 
-      - title: Optics MTL
-        url: /docs/apidocs/arrow-optics-mtl
+      - title: MTL extensions
+        url: /docs/apidocs/arrow-mtl-data
 
       - title: Optics
         url: /docs/apidocs/arrow-optics
 
-      - title: Recursion Data
-        url: /docs/apidocs/arrow-recursion-data
+      - title: Optics MTL
+        url: /docs/apidocs/arrow-optics-mtl
 
       - title: Recursion
         url: /docs/apidocs/arrow-recursion
+
+      - title: Recursion Extensions
+        url: /docs/apidocs/arrow-recursion-data
 
       - title: Reflect
         url: /docs/apidocs/arrow-reflect
@@ -125,15 +125,14 @@ options:
       - title: Test
         url: /docs/apidocs/arrow-test
 
-      - title: UI Data
-        url: /docs/apidocs/arrow-ui-data
-
       - title: UI
         url: /docs/apidocs/arrow-ui
 
+      - title: UI Extensions
+        url: /docs/apidocs/arrow-ui-data
+
       - title: Validation
         url: /docs/apidocs/arrow-validation
-
 
   - title: Patterns
 
