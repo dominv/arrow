@@ -275,26 +275,14 @@ options:
       - title: Semigroup
         url: /docs/arrow/typeclasses/semigroup/
 
-      - title: Semigroupal
-        url: /docs/apidocs/arrow-typeclasses/arrow.typeclasses/-semigroupal/
-
-      - title: Monoidal
-        url: /docs/apidocs/arrow-typeclasses/arrow.typeclasses/-monoidal/
-
       - title: Monoid
         url: /docs/arrow/typeclasses/monoid/
-
-      - title: Semiring
-        url: /docs/apidocs/arrow-typeclasses/arrow.typeclasses/-semiring/
 
       - title: Foldable
         url: /docs/arrow/typeclasses/foldable/
 
       - title: Bifoldable
         url: /docs/arrow/typeclasses/bifoldable/
-
-      - title: Bitraverse
-        url: /docs/apidocs/arrow-typeclasses/arrow.typeclasses/-bitraverse/
 
       - title: Traverse
         url: /docs/arrow/typeclasses/traverse/
@@ -362,12 +350,8 @@ options:
       - title: MonoidK
         url: /docs/arrow/typeclasses/monoidk/
 
-      - title: Inject
-        url: /docs/typeclasses/inject/
-
       - title: Alternative
         url: /docs/arrow/typeclasses/alternative/
-
 
       - title: Divide
         url: /docs/arrow/typeclasses/divide/
@@ -404,7 +388,7 @@ options:
         url: /docs/effects/fiber/
 
       - title: Resource
-        url: /docs/apidocs/arrow-effects-data/arrow.fx/-resource/
+        url: /docs/apidocs/arrow-fx/arrow.fx/-resource/
 
   - title: Optics
 
