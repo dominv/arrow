@@ -6,14 +6,11 @@ options:
       - title: Index
         url: /docs/
 
-      - title: Setup
-        url: /docs/quickstart/setup/
+      - title: Libraries
+        url: /docs/quickstart/libraries/
 
       - title: Linting
         url: /docs/quickstart/linting/
-
-      - title: Libraries
-        url: /docs/quickstart/libraries/
 
       - title: Blogs & Presentations
         url: /blog/
@@ -38,60 +35,104 @@ options:
 
     nested_options:
 
-      - title: Type Classes
-        url: /docs/apidocs/arrow-typeclasses/
+      - title: Ank
+        url: /docs/apidocs/arrow-ank/
 
-      - title: Core Data Types
+      - title: Ank Gradle
+        url: /docs/apidocs/arrow-ank-gradle/
+
+      - title: Annotations
+        url: /docs/apidocs/arrow-annotations/
+
+      - title: AQL
+        url: /docs/apidocs/arrow-aql/
+
+      - title: Benchmarks Effects
+        url: /docs/apidocs/arrow-benchmarks-fx/
+
+      - title: Core
+        url: /docs/apidocs/arrow-core/
+
+      - title: Core Extensions
         url: /docs/apidocs/arrow-core-data/
 
+      - title: Docs
+        url: /docs/apidocs/arrow-docs/
+
+      - title: Examples
+        url: /docs/apidocs/arrow-examples/
+
+      - title: Free
+        url: /docs/apidocs/arrow-free/
+
+      - title: Free Extensions
+        url: /docs/apidocs/arrow-free-data/
+
       - title: Effects
-        url: /docs/apidocs/arrow-effects-data/
+        url: /docs/apidocs/arrow-fx/
 
-      - title: Effects Extensions
-        url: /docs/apidocs/arrow-effects-extensions/
-
-      - title: Effects Coroutines
-        url: /docs/apidocs/arrow-effects-kotlinx-coroutines-data/
-
-      - title: Effects Coroutines Extensions
-        url: /docs/apidocs/arrow-effects-kotlinx-coroutines-extensions/
-
-      - title: Effects Rx2
-        url: /docs/apidocs/arrow-effects-rx2-data/
-
-      - title: Effects Rx2 Extensions
-        url: /docs/apidocs/arrow-effects-rx2-extensions/
+      - title: Effects MTL
+        url: /docs/apidocs/arrow-fx-mtl/
 
       - title: Effects Reactor
-        url: /docs/apidocs/arrow-effects-reactor-data/
+        url: /docs/apidocs/arrow-fx-reactor/
 
-      - title: Effects Reactor Extensions
-        url: /docs/apidocs/arrow-effects-reactor-extensions/
-
-      - title: Streams
-        url: /docs/apidocs/arrow-streams/
-
-      - title: MTL
-        url: /docs/apidocs/arrow-mtl/
-
-      - title: Optics
-        url: /docs/apidocs/arrow-optics/
-
-      - title: Recursion
-        url: /docs/apidocs/arrow-recursion-data/
-
-      - title: Recursion Extensions
-        url: /docs/apidocs/arrow-recursion-extensions/
+      - title: Effects Rx2
+        url: /docs/apidocs/arrow-fx-rx2/
 
       - title: Generic
         url: /docs/apidocs/arrow-generic/
 
-      - title: Free
-        url: /docs/apidocs/arrow-free-data/
+      - title: Integrations Retrofit Adapter
+        url: /docs/apidocs/arrow-integrations-retrofit-adapter/
+
+      - title: Kindedj
+        url: /docs/apidocs/arrow-kindedj/
+
+      - title: Meta
+        url: /docs/apidocs/arrow-meta/
+
+      - title: Meta Test Models
+        url: /docs/apidocs/arrow-meta-test-models/
+
+      - title: MTL
+        url: /docs/apidocs/arrow-mtl/
+
+      - title: MTL extensions
+        url: /docs/apidocs/arrow-mtl-data/
+
+      - title: Optics
+        url: /docs/apidocs/arrow-optics/
+
+      - title: Optics MTL
+        url: /docs/apidocs/arrow-optics-mtl/
+
+      - title: Recursion
+        url: /docs/apidocs/arrow-recursion/
+
+      - title: Recursion Extensions
+        url: /docs/apidocs/arrow-recursion-data/
+
+      - title: Reflect
+        url: /docs/apidocs/arrow-reflect/
+
+      - title: Streams
+        url: /docs/apidocs/arrow-streams/
+
+      - title: Syntax
+        url: /docs/apidocs/arrow-syntax/
+
+      - title: Test
+        url: /docs/apidocs/arrow-test/
+
+      - title: UI
+        url: /docs/apidocs/arrow-ui/
+
+      - title: UI Extensions
+        url: /docs/apidocs/arrow-ui-data/
 
       - title: Validation
         url: /docs/apidocs/arrow-validation/
-
 
   - title: Patterns
 
@@ -129,19 +170,19 @@ options:
         url: /docs/datatypes/basic/
 
       - title: Option
-        url: /docs/apidocs/arrow-core-data/arrow.core/-option/
+        url: /docs/arrow/core/option/
 
       - title: Either
-        url: /docs/apidocs/arrow-core-data/arrow.core/-either/
+        url: /docs/arrow/core/either/
 
       - title: Try
-        url: /docs/apidocs/arrow-core-data/arrow.core/-try/
+        url: /docs/arrow/core/try/
 
       - title: Validated
-        url: /docs/apidocs/arrow-core-data/arrow.core/-validated/
+        url: /docs/arrow/data/validated/
 
       - title: NonEmptyList
-        url: /docs/apidocs/arrow-core-data/arrow.core/-non-empty-list/
+        url: /docs/arrow/data/nonemptylist/
 
       - title: ListK
         url: /docs/arrow/data/listk/
@@ -234,26 +275,14 @@ options:
       - title: Semigroup
         url: /docs/arrow/typeclasses/semigroup/
 
-      - title: Semigroupal
-        url: /docs/apidocs/arrow-typeclasses/arrow.typeclasses/-semigroupal/
-
-      - title: Monoidal
-        url: /docs/apidocs/arrow-typeclasses/arrow.typeclasses/-monoidal/
-
       - title: Monoid
         url: /docs/arrow/typeclasses/monoid/
-
-      - title: Semiring
-        url: /docs/apidocs/arrow-typeclasses/arrow.typeclasses/-semiring/
 
       - title: Foldable
         url: /docs/arrow/typeclasses/foldable/
 
       - title: Bifoldable
         url: /docs/arrow/typeclasses/bifoldable/
-
-      - title: Bitraverse
-        url: /docs/apidocs/arrow-typeclasses/arrow.typeclasses/-bitraverse/
 
       - title: Traverse
         url: /docs/arrow/typeclasses/traverse/
@@ -321,12 +350,8 @@ options:
       - title: MonoidK
         url: /docs/arrow/typeclasses/monoidk/
 
-      - title: Inject
-        url: /docs/typeclasses/inject/
-
       - title: Alternative
         url: /docs/arrow/typeclasses/alternative/
-
 
       - title: Divide
         url: /docs/arrow/typeclasses/divide/
@@ -363,7 +388,7 @@ options:
         url: /docs/effects/fiber/
 
       - title: Resource
-        url: /docs/apidocs/arrow-effects-data/arrow.fx/-resource/
+        url: /docs/apidocs/arrow-fx/arrow.fx/-resource/
 
   - title: Optics
 
@@ -522,4 +547,3 @@ options:
         url: /docs/legal/credits/
 
       - title: Licenses
-        url: /docs/legal/licenses/
